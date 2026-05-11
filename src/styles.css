@@ -1,5 +1,8 @@
-
 @import "tailwindcss";
+
+:root {
+  --font-helvetica: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
 
 * {
   box-sizing: border-box;
@@ -13,5 +16,7 @@ body,
 
 body {
   margin: 0;
+  font-family: var(--font-helvetica);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-
