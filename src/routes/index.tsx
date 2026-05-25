@@ -5,6 +5,7 @@ import { GRID_ORDER } from '#/lib/sections'
 import aboutImg from '#/assets/about.png'
 import beliefsImg from '#/assets/beliefs.png'
 import communityImg from '#/assets/community.png'
+import donationsImg from '#/assets/gifts_donations.png'
 import futureImg from '#/assets/future_ideas.png'
 import infrastructureImg from '#/assets/infrastructure.png'
 import legalImg from '#/assets/legal.png'
@@ -37,6 +38,7 @@ const IMAGES: Record<string, string> = {
   research: researchImg,
   legal: legalImg,
   future: futureImg,
+  donations: donationsImg,
 }
 
 const cellBase =
@@ -153,7 +155,6 @@ function SacredGeometry() {
           </svg>
 
           {GRID_ORDER.map((entry, i) => {
-            if (entry.id === 'donations') return null
             const isCenter = entry.id === 'home'
             const order = [0, 1, 2, 5, 8, 7, 6, 3].indexOf(i)
             const delay = isCenter ? 2200 : 1600 + (order >= 0 ? order : 0) * 110
