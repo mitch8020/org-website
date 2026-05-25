@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { GRID_ORDER, SECTIONS } from '#/lib/sections'
+import type { SECTIONS } from '#/lib/sections';
+import { GRID_ORDER } from '#/lib/sections'
 
 export const Route = createFileRoute('/archive/1')({ component: EditorialBureau })
 

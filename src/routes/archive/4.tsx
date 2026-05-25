@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { GRID_ORDER, SECTIONS } from '#/lib/sections'
+import type { SECTIONS } from '#/lib/sections';
+import { GRID_ORDER } from '#/lib/sections'
 import type { JSX } from 'react'
 
 export const Route = createFileRoute('/archive/4')({ component: TarotAtelier })
