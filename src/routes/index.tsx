@@ -218,9 +218,11 @@ function SacredGeometry() {
             const s = entry as (typeof SECTIONS)[number]
             const img = IMAGES[s.id]
             return (
-              <Link
+              <a
                 key={s.id}
-                to={s.href}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`${cellBase} outline-[rgba(232,226,196,0.16)]`}
                 style={{
                   backgroundImage: img
@@ -232,9 +234,6 @@ function SacredGeometry() {
                 }}
               >
                 <div className="flex w-[82%] flex-col items-center gap-1 text-center sm:gap-2 md:gap-2.5">
-                  <span className="text-[8px] font-extralight tracking-[0.4em] text-[#ece2c4]/80 sm:text-[10px] sm:tracking-[0.5em] md:text-[11px] md:tracking-[0.6em]">
-                    {s.roman}
-                  </span>
                   <h2
                     className="m-0 break-words font-light uppercase leading-[1.05] tracking-[0.1em] text-[clamp(10px,1.6vw,20px)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)] sm:font-extralight sm:tracking-[0.18em] md:tracking-[0.24em]"
                   >
@@ -242,7 +241,7 @@ function SacredGeometry() {
                   </h2>
                   <span className="block h-px w-4 bg-[#ece2c4]/70 sm:my-1 sm:w-6 md:w-7 md:bg-[#b8ad8d]" />
                 </div>
-              </Link>
+              </a>
             )
           })}
         </div>
