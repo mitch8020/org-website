@@ -7,6 +7,7 @@ import beliefsImg from '#/assets/beliefs.png'
 import communityImg from '#/assets/community.png'
 import donationsImg from '#/assets/gifts_donations.png'
 import futureImg from '#/assets/future_ideas.png'
+import homeRainbowImg from '#/assets/home_rainbow.jpeg'
 import infrastructureImg from '#/assets/infrastructure.png'
 import legalImg from '#/assets/legal.png'
 import researchImg from '#/assets/research.png'
@@ -29,17 +30,6 @@ const NOISE_URL =
 
 const VIGNETTE_BG =
   'radial-gradient(60% 50% at 50% 52%, rgba(212,162,74,0.07), transparent 60%), radial-gradient(80% 70% at 50% 50%, rgba(236,226,196,0.04), transparent 65%)'
-
-const RAINBOW_FILLS = [
-  '#ff3b8a',
-  '#ff8a2a',
-  '#f5cf3a',
-  '#7dd84a',
-  '#22c8a8',
-  '#33a8d8',
-  '#9b5cff',
-  '#e34dd9',
-]
 
 const IMAGES: Record<string, string> = {
   about: aboutImg,
@@ -182,37 +172,13 @@ function SacredGeometry() {
                   style={{ animationDelay: `${delay}ms` }}
                 >
                   <div
-                    className={`${octagonFrame} flex items-center justify-center outline-[rgba(236,226,196,0.45)] [background:radial-gradient(circle_at_50%_50%,rgba(232,226,196,0.18),rgba(11,13,18,0.95))]`}
+                    className={`${octagonFrame} relative overflow-hidden bg-[#0b0d12] outline-[rgba(236,226,196,0.45)]`}
                   >
-                    <svg
-                      viewBox="-50 -50 100 100"
+                    <div
                       aria-hidden
-                      className="h-[70%] w-[70%] animate-[v2-rotate_28s_linear_infinite] drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]"
-                    >
-                      {Array.from({ length: 8 }).map((_, k) => {
-                        const a1 = (Math.PI / 4) * k - Math.PI / 8
-                        const a2 = (Math.PI / 4) * (k + 1) - Math.PI / 8
-                        const x1 = Math.cos(a1) * 44
-                        const y1 = Math.sin(a1) * 44
-                        const x2 = Math.cos(a2) * 44
-                        const y2 = Math.sin(a2) * 44
-                        return (
-                          <polygon
-                            key={k}
-                            points={`0,0 ${x1.toFixed(2)},${y1.toFixed(2)} ${x2.toFixed(2)},${y2.toFixed(2)}`}
-                            fill={RAINBOW_FILLS[k]}
-                            stroke="rgba(255,255,255,0.55)"
-                            strokeWidth="0.8"
-                          />
-                        )
-                      })}
-                      <polygon
-                        points={octagonPoints(0, 0, 44)}
-                        fill="none"
-                        stroke="rgba(255,255,255,0.95)"
-                        strokeWidth="1.4"
-                      />
-                    </svg>
+                      className="absolute -inset-[10%] bg-cover bg-center animate-[v2-rotate_28s_linear_infinite]"
+                      style={{ backgroundImage: `url(${homeRainbowImg})` }}
+                    />
                   </div>
                   {/* <span className="block h-px w-5 bg-[#b8ad8d] transition-colors duration-300 group-hover:bg-[#ece2c4] sm:w-7" /> */}
                   <h2 className="m-0 font-thin uppercase leading-none tracking-[0.4em] text-[clamp(12px,1.5vw,18px)] sm:tracking-[0.5em]">
