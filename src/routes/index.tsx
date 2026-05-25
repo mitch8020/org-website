@@ -52,8 +52,11 @@ const IMAGES: Record<string, string> = {
   donations: donationsImg,
 }
 
-const cellBase =
-  'group relative z-[1] flex aspect-square h-full w-full items-center justify-center no-underline text-[#ece2c4] opacity-0 scale-[0.92] outline outline-1 outline-offset-[-1px] transition-[transform,filter] duration-300 ease-out hover:scale-[1.02] hover:brightness-110 [clip-path:polygon(29.3%_0,70.7%_0,100%_29.3%,100%_70.7%,70.7%_100%,29.3%_100%,0_70.7%,0_29.3%)] animate-[v2-pop_900ms_cubic-bezier(0.2,0.8,0.2,1)_forwards]'
+const cellWrapper =
+  'group relative z-[1] flex flex-col items-center gap-2 no-underline text-[#ece2c4] opacity-0 scale-[0.92] animate-[v2-pop_900ms_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-2.5'
+
+const octagonFrame =
+  'aspect-square w-full outline outline-1 outline-offset-[-1px] transition-[transform,filter] duration-300 ease-out group-hover:scale-[1.02] [clip-path:polygon(29.3%_0,70.7%_0,100%_29.3%,100%_70.7%,70.7%_100%,29.3%_100%,0_70.7%,0_29.3%)]'
 
 function SacredGeometry() {
   const cx = 500
@@ -121,7 +124,7 @@ function SacredGeometry() {
       </svg>
 
       <main className="relative z-[3] flex min-h-screen items-center justify-center px-[clamp(12px,4vw,56px)] py-[clamp(16px,4vw,28px)]">
-        <div className="relative grid w-full max-w-[min(1100px,calc(100vh-80px))] grid-cols-3 gap-[clamp(8px,2vw,30px)]">
+        <div className="relative grid w-full max-w-[min(1100px,calc(100vh-200px))] grid-cols-3 gap-x-[clamp(8px,2vw,30px)] gap-y-[clamp(8px,2vw,2px)]">
           <svg
             aria-hidden
             preserveAspectRatio="none"
@@ -175,10 +178,12 @@ function SacredGeometry() {
                 <Link
                   key={entry.id}
                   to="/"
-                  className={`${cellBase} outline-[rgba(236,226,196,0.4)] [background:radial-gradient(circle_at_50%_50%,rgba(232,226,196,0.18),rgba(11,13,18,0.95))] hover:[background:radial-gradient(circle_at_50%_50%,rgba(232,226,196,0.4),rgba(11,13,18,0.9))]`}
+                  className={cellWrapper}
                   style={{ animationDelay: `${delay}ms` }}
                 >
-                  <div className="relative flex w-[78%] items-center justify-center">
+                  <div
+                    className={`${octagonFrame} flex items-center justify-center outline-[rgba(236,226,196,0.45)] [background:radial-gradient(circle_at_50%_50%,rgba(232,226,196,0.18),rgba(11,13,18,0.95))]`}
+                  >
                     <svg
                       viewBox="-50 -50 100 100"
                       aria-hidden
@@ -208,13 +213,11 @@ function SacredGeometry() {
                         strokeWidth="1.4"
                       />
                     </svg>
-                    <div className="absolute border border-[#b8ad8d] bg-[#0b0d12] px-2 py-1 text-[clamp(14px,2vw,30px)] font-thin tracking-[0.3em] text-[#ece2c4] sm:px-3.5 sm:py-1.5 sm:tracking-[0.42em]">
-                      ORG
-                    </div>
                   </div>
-                  <span className="absolute bottom-[10%] hidden text-[8px] uppercase tracking-[0.4em] text-[#b8ad8d] sm:bottom-[14%] sm:inline sm:text-[9px] sm:tracking-[0.5em]">
-                    RETURN TO THE PRINCIPAL
-                  </span>
+                  {/* <span className="block h-px w-5 bg-[#b8ad8d] transition-colors duration-300 group-hover:bg-[#ece2c4] sm:w-7" /> */}
+                  <h2 className="m-0 font-thin uppercase leading-none tracking-[0.4em] text-[clamp(12px,1.5vw,18px)] sm:tracking-[0.5em]">
+                    ORG
+                  </h2>
                 </Link>
               )
             }
@@ -227,24 +230,21 @@ function SacredGeometry() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${cellBase} outline-[rgba(232,226,196,0.16)]`}
-                style={{
-                  backgroundImage: img
-                    ? `linear-gradient(rgba(11,13,18,0.55), rgba(11,13,18,0.55)), url(${img})`
-                    : 'linear-gradient(140deg, rgba(28,30,38,0.92), rgba(15,17,22,0.92))',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  animationDelay: `${delay}ms`,
-                }}
+                className={cellWrapper}
+                style={{ animationDelay: `${delay}ms` }}
               >
-                <div className="flex w-[82%] flex-col items-center gap-1 text-center sm:gap-2 md:gap-2.5">
-                  <h2
-                    className="m-0 break-words font-light uppercase leading-[1.05] tracking-[0.1em] text-[clamp(10px,1.6vw,20px)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)] sm:font-extralight sm:tracking-[0.18em] md:tracking-[0.24em]"
-                  >
-                    {s.label}
-                  </h2>
-                  <span className="block h-px w-4 bg-[#ece2c4]/70 sm:my-1 sm:w-6 md:w-7 md:bg-[#b8ad8d]" />
-                </div>
+                <div
+                  className={`${octagonFrame} bg-cover bg-center outline-[rgba(232,226,196,0.18)] group-hover:brightness-110`}
+                  style={{
+                    backgroundImage: img
+                      ? `url(${img})`
+                      : 'linear-gradient(140deg, rgba(28,30,38,0.92), rgba(15,17,22,0.92))',
+                  }}
+                />
+                {/* <span className="block h-px w-4 bg-[#b8ad8d]/70 transition-colors duration-300 group-hover:bg-[#ece2c4] sm:w-6" /> */}
+                <h2 className="m-0 break-words text-center font-extralight uppercase leading-[1.15] tracking-[0.16em] text-[clamp(9px,1.1vw,14px)] sm:tracking-[0.2em] md:tracking-[0.26em]">
+                  {s.label}
+                </h2>
               </a>
             )
           })}
