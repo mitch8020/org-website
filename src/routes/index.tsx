@@ -30,6 +30,17 @@ const NOISE_URL =
 const VIGNETTE_BG =
   'radial-gradient(60% 50% at 50% 52%, rgba(212,162,74,0.07), transparent 60%), radial-gradient(80% 70% at 50% 50%, rgba(236,226,196,0.04), transparent 65%)'
 
+const RAINBOW_FILLS = [
+  '#ff3b8a',
+  '#ff8a2a',
+  '#f5cf3a',
+  '#7dd84a',
+  '#22c8a8',
+  '#33a8d8',
+  '#9b5cff',
+  '#e34dd9',
+]
+
 const IMAGES: Record<string, string> = {
   about: aboutImg,
   community: communityImg,
@@ -123,7 +134,7 @@ function SacredGeometry() {
               y2="100%"
               stroke="rgba(232,224,206,0.22)"
               strokeWidth="1"
-              strokeDasharray="2 6"
+              strokeDasharray="10 6"
             />
             <line
               x1="66.666%"
@@ -132,7 +143,7 @@ function SacredGeometry() {
               y2="100%"
               stroke="rgba(232,224,206,0.22)"
               strokeWidth="1"
-              strokeDasharray="2 6"
+              strokeDasharray="10 6"
             />
             <line
               x1="0"
@@ -141,7 +152,7 @@ function SacredGeometry() {
               y2="33.333%"
               stroke="rgba(232,224,206,0.22)"
               strokeWidth="1"
-              strokeDasharray="2 6"
+              strokeDasharray="10 6"
             />
             <line
               x1="0"
@@ -150,7 +161,7 @@ function SacredGeometry() {
               y2="66.666%"
               stroke="rgba(232,224,206,0.22)"
               strokeWidth="1"
-              strokeDasharray="2 6"
+              strokeDasharray="10 6"
             />
           </svg>
 
@@ -171,14 +182,8 @@ function SacredGeometry() {
                     <svg
                       viewBox="-50 -50 100 100"
                       aria-hidden
-                      className="h-[70%] w-[70%] animate-[v2-rotate_28s_linear_infinite]"
+                      className="h-[70%] w-[70%] animate-[v2-rotate_28s_linear_infinite] drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]"
                     >
-                      <defs>
-                        <linearGradient id="v2grad" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0" stopColor="#f6efd9" />
-                          <stop offset="1" stopColor="#9e8e6c" />
-                        </linearGradient>
-                      </defs>
                       {Array.from({ length: 8 }).map((_, k) => {
                         const a1 = (Math.PI / 4) * k - Math.PI / 8
                         const a2 = (Math.PI / 4) * (k + 1) - Math.PI / 8
@@ -186,22 +191,21 @@ function SacredGeometry() {
                         const y1 = Math.sin(a1) * 44
                         const x2 = Math.cos(a2) * 44
                         const y2 = Math.sin(a2) * 44
-                        const shade = 0.18 + (k / 8) * 0.7
                         return (
                           <polygon
                             key={k}
                             points={`0,0 ${x1.toFixed(2)},${y1.toFixed(2)} ${x2.toFixed(2)},${y2.toFixed(2)}`}
-                            fill={`rgba(232,224,206,${shade})`}
-                            stroke="rgba(11,13,18,0.6)"
-                            strokeWidth="0.6"
+                            fill={RAINBOW_FILLS[k]}
+                            stroke="rgba(255,255,255,0.55)"
+                            strokeWidth="0.8"
                           />
                         )
                       })}
                       <polygon
                         points={octagonPoints(0, 0, 44)}
                         fill="none"
-                        stroke="rgba(232,224,206,0.9)"
-                        strokeWidth="0.8"
+                        stroke="rgba(255,255,255,0.95)"
+                        strokeWidth="1.4"
                       />
                     </svg>
                     <div className="absolute border border-[#b8ad8d] bg-[#0b0d12] px-2 py-1 text-[clamp(14px,2vw,30px)] font-thin tracking-[0.3em] text-[#ece2c4] sm:px-3.5 sm:py-1.5 sm:tracking-[0.42em]">
