@@ -82,7 +82,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   },
   {
     id: 'donations',
-    label: 'Gifts',
+    label: 'Gifts & Contributions',
     href: 'https://www.icloud.com/pages/006O_K9mPqEn3NaRNxnEx88Jg#Gifts/Donations',
     roman: 'VIII',
     numeral: '08',
