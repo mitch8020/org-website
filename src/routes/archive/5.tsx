@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { GRID_ORDER, SECTIONS } from '#/lib/sections'
 
-export const Route = createFileRoute('/5')({ component: BureauTerminal })
+export const Route = createFileRoute('/archive/5')({ component: BureauTerminal })
 
 const STATUS: Record<string, string> = {
   about: 'OPEN',

@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { GRID_ORDER, SECTIONS } from '#/lib/sections'
 
-export const Route = createFileRoute('/1')({ component: EditorialBureau })
+export const Route = createFileRoute('/archive/1')({ component: EditorialBureau })
 
 function EditorialBureau() {
   const now = new Date()

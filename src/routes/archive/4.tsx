@@ -2,7 +2,7 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { GRID_ORDER, SECTIONS } from '#/lib/sections'
 import type { JSX } from 'react'
 
-export const Route = createFileRoute('/4')({ component: TarotAtelier })
+export const Route = createFileRoute('/archive/4')({ component: TarotAtelier })
 
 function Glyph({ id }: { id: string }) {
   const common = {

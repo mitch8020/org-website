@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { GRID_ORDER, SECTIONS } from '#/lib/sections'
 
-export const Route = createFileRoute('/2')({ component: SacredGeometry })
+export const Route = createFileRoute('/archive/2')({ component: SacredGeometry })
 
 function octagonPoints(cx: number, cy: number, r: number) {
   const pts: Array<string> = []

@@ -9,123 +9,107 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as R5RouteImport } from './routes/5'
-import { Route as R4RouteImport } from './routes/4'
-import { Route as R3RouteImport } from './routes/3'
-import { Route as R2RouteImport } from './routes/2'
-import { Route as R1RouteImport } from './routes/1'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as Archive5RouteImport } from './routes/archive/5'
+import { Route as Archive4RouteImport } from './routes/archive/4'
+import { Route as Archive3RouteImport } from './routes/archive/3'
+import { Route as Archive2RouteImport } from './routes/archive/2'
+import { Route as Archive1RouteImport } from './routes/archive/1'
 
-const R5Route = R5RouteImport.update({
-  id: '/5',
-  path: '/5',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const R4Route = R4RouteImport.update({
-  id: '/4',
-  path: '/4',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const R3Route = R3RouteImport.update({
-  id: '/3',
-  path: '/3',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const R2Route = R2RouteImport.update({
-  id: '/2',
-  path: '/2',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const R1Route = R1RouteImport.update({
-  id: '/1',
-  path: '/1',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Archive5Route = Archive5RouteImport.update({
+  id: '/archive/5',
+  path: '/archive/5',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Archive4Route = Archive4RouteImport.update({
+  id: '/archive/4',
+  path: '/archive/4',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Archive3Route = Archive3RouteImport.update({
+  id: '/archive/3',
+  path: '/archive/3',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Archive2Route = Archive2RouteImport.update({
+  id: '/archive/2',
+  path: '/archive/2',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Archive1Route = Archive1RouteImport.update({
+  id: '/archive/1',
+  path: '/archive/1',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/1': typeof R1Route
-  '/2': typeof R2Route
-  '/3': typeof R3Route
-  '/4': typeof R4Route
-  '/5': typeof R5Route
+  '/archive/1': typeof Archive1Route
+  '/archive/2': typeof Archive2Route
+  '/archive/3': typeof Archive3Route
+  '/archive/4': typeof Archive4Route
+  '/archive/5': typeof Archive5Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/1': typeof R1Route
-  '/2': typeof R2Route
-  '/3': typeof R3Route
-  '/4': typeof R4Route
-  '/5': typeof R5Route
+  '/archive/1': typeof Archive1Route
+  '/archive/2': typeof Archive2Route
+  '/archive/3': typeof Archive3Route
+  '/archive/4': typeof Archive4Route
+  '/archive/5': typeof Archive5Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/1': typeof R1Route
-  '/2': typeof R2Route
-  '/3': typeof R3Route
-  '/4': typeof R4Route
-  '/5': typeof R5Route
+  '/archive/1': typeof Archive1Route
+  '/archive/2': typeof Archive2Route
+  '/archive/3': typeof Archive3Route
+  '/archive/4': typeof Archive4Route
+  '/archive/5': typeof Archive5Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/1' | '/2' | '/3' | '/4' | '/5'
+  fullPaths:
+    | '/'
+    | '/archive/1'
+    | '/archive/2'
+    | '/archive/3'
+    | '/archive/4'
+    | '/archive/5'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/1' | '/2' | '/3' | '/4' | '/5'
-  id: '__root__' | '/' | '/1' | '/2' | '/3' | '/4' | '/5'
+  to:
+    | '/'
+    | '/archive/1'
+    | '/archive/2'
+    | '/archive/3'
+    | '/archive/4'
+    | '/archive/5'
+  id:
+    | '__root__'
+    | '/'
+    | '/archive/1'
+    | '/archive/2'
+    | '/archive/3'
+    | '/archive/4'
+    | '/archive/5'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  R1Route: typeof R1Route
-  R2Route: typeof R2Route
-  R3Route: typeof R3Route
-  R4Route: typeof R4Route
-  R5Route: typeof R5Route
+  Archive1Route: typeof Archive1Route
+  Archive2Route: typeof Archive2Route
+  Archive3Route: typeof Archive3Route
+  Archive4Route: typeof Archive4Route
+  Archive5Route: typeof Archive5Route
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/5': {
-      id: '/5'
-      path: '/5'
-      fullPath: '/5'
-      preLoaderRoute: typeof R5RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/4': {
-      id: '/4'
-      path: '/4'
-      fullPath: '/4'
-      preLoaderRoute: typeof R4RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/3': {
-      id: '/3'
-      path: '/3'
-      fullPath: '/3'
-      preLoaderRoute: typeof R3RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/2': {
-      id: '/2'
-      path: '/2'
-      fullPath: '/2'
-      preLoaderRoute: typeof R2RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/1': {
-      id: '/1'
-      path: '/1'
-      fullPath: '/1'
-      preLoaderRoute: typeof R1RouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -133,16 +117,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/archive/5': {
+      id: '/archive/5'
+      path: '/archive/5'
+      fullPath: '/archive/5'
+      preLoaderRoute: typeof Archive5RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/archive/4': {
+      id: '/archive/4'
+      path: '/archive/4'
+      fullPath: '/archive/4'
+      preLoaderRoute: typeof Archive4RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/archive/3': {
+      id: '/archive/3'
+      path: '/archive/3'
+      fullPath: '/archive/3'
+      preLoaderRoute: typeof Archive3RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/archive/2': {
+      id: '/archive/2'
+      path: '/archive/2'
+      fullPath: '/archive/2'
+      preLoaderRoute: typeof Archive2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/archive/1': {
+      id: '/archive/1'
+      path: '/archive/1'
+      fullPath: '/archive/1'
+      preLoaderRoute: typeof Archive1RouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  R1Route: R1Route,
-  R2Route: R2Route,
-  R3Route: R3Route,
-  R4Route: R4Route,
-  R5Route: R5Route,
+  Archive1Route: Archive1Route,
+  Archive2Route: Archive2Route,
+  Archive3Route: Archive3Route,
+  Archive4Route: Archive4Route,
+  Archive5Route: Archive5Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
