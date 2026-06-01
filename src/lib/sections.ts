@@ -13,7 +13,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   {
     id: 'about',
     label: 'About Us',
-    href: 'https://www.icloud.com/pages/0fec6z2nskySidyOQGLETYGXg#About_Us',
+    href: '/about',
     roman: 'I',
     numeral: '01',
     tagline: 'Origin, mandate, principals',

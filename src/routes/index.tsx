@@ -161,7 +161,9 @@ function SacredGeometry() {
           {GRID_ORDER.map((entry, i) => {
             const isCenter = entry.id === 'home'
             const order = [0, 1, 2, 5, 8, 7, 6, 3].indexOf(i)
-            const delay = isCenter ? 2200 : 1600 + (order >= 0 ? order : 0) * 110
+            const delay = isCenter
+              ? 2200
+              : 1600 + (order >= 0 ? order : 0) * 110
 
             if (isCenter) {
               return (
@@ -190,15 +192,9 @@ function SacredGeometry() {
 
             const s = entry as (typeof SECTIONS)[number]
             const img = IMAGES[s.id]
-            return (
-              <a
-                key={s.id}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cellWrapper}
-                style={{ animationDelay: `${delay}ms` }}
-              >
+            const isInternal = s.href.startsWith('/')
+            const inner = (
+              <>
                 <div
                   className={`${octagonFrame} bg-cover bg-center outline-[rgba(232,226,196,0.18)] group-hover:brightness-110`}
                   style={{
@@ -211,6 +207,28 @@ function SacredGeometry() {
                 <h2 className="m-0 break-words text-center font-extralight uppercase leading-[1.15] tracking-[0.16em] text-[clamp(9px,1.1vw,14px)] sm:tracking-[0.2em] md:tracking-[0.26em]">
                   {s.label}
                 </h2>
+              </>
+            )
+
+            return isInternal ? (
+              <Link
+                key={s.id}
+                to={s.href}
+                className={cellWrapper}
+                style={{ animationDelay: `${delay}ms` }}
+              >
+                {inner}
+              </Link>
+            ) : (
+              <a
+                key={s.id}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cellWrapper}
+                style={{ animationDelay: `${delay}ms` }}
+              >
+                {inner}
               </a>
             )
           })}
