@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as Archive5RouteImport } from './routes/archive/5'
 import { Route as Archive4RouteImport } from './routes/archive/4'
@@ -16,6 +17,11 @@ import { Route as Archive3RouteImport } from './routes/archive/3'
 import { Route as Archive2RouteImport } from './routes/archive/2'
 import { Route as Archive1RouteImport } from './routes/archive/1'
 
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -49,6 +55,7 @@ const Archive1Route = Archive1RouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   Archive1Route: typeof Archive1Route
   Archive2Route: typeof Archive2Route
   Archive3Route: typeof Archive3Route
@@ -110,6 +123,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -157,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   Archive1Route: Archive1Route,
   Archive2Route: Archive2Route,
   Archive3Route: Archive3Route,
