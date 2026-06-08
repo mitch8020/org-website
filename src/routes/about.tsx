@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import type { OutlineNode } from '#/lib/about-content'
 import { ARTICLES, CONTACT } from '#/lib/about-content'
+import { SiteNav } from '#/components/SiteNav'
 import { SECTIONS } from '#/lib/sections'
 import { svgCoord } from '#/lib/svg'
 
@@ -77,8 +78,6 @@ function renderInline(text: string, keyBase: string) {
           <a
             key={`${keyBase}-r${i}`}
             href={href}
-            target="_blank"
-            rel="noopener noreferrer"
             className="font-medium text-[#e9c987] underline decoration-[rgba(212,162,74,0.4)] decoration-from-font underline-offset-[3px] transition-colors hover:decoration-[#d4a24a]"
           >
             {name}
@@ -370,40 +369,10 @@ function AboutPage() {
         />
       </div>
 
-      {/* top bar */}
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-[rgba(232,224,206,0.08)] bg-[rgba(11,13,18,0.72)] backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1180px] items-center justify-between px-[clamp(16px,4vw,40px)] py-3">
-          <Link
-            to="/"
-            className="group inline-flex items-center gap-2.5 text-[10px] uppercase tracking-[0.3em] text-[#ece2c4] no-underline transition-colors hover:text-white"
-          >
-            <svg
-              viewBox="0 0 100 100"
-              className="h-4 w-4 transition-transform duration-500 group-hover:rotate-[22.5deg]"
-              aria-hidden
-            >
-              <polygon
-                points={octagonPoints(50, 50, 46)}
-                fill="none"
-                stroke={GOLD}
-                strokeWidth="4"
-              />
-            </svg>
-            <span>
-              ORG <span className="text-[#b8ad8d]">/ Index</span>
-            </span>
-          </Link>
-          <span className="hidden text-[10px] uppercase tracking-[0.34em] text-[#b8ad8d] sm:block">
-            About&nbsp;Us · The Charter
-          </span>
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#d4a24a]">
-            ORG-001.AU
-          </span>
-        </div>
-      </header>
+      <SiteNav />
 
       {/* hero */}
-      <section className="relative z-[3] mx-auto max-w-[1180px] px-[clamp(16px,4vw,40px)] pb-[clamp(36px,6vh,64px)] pt-[clamp(104px,15vh,168px)] text-center">
+      <section className="relative z-[3] mx-auto max-w-[1180px] px-[clamp(16px,4vw,40px)] pb-[clamp(36px,6vh,64px)] pt-[clamp(132px,17vh,190px)] text-center">
         <div
           className="ab-rise text-[10px] uppercase tracking-[0.46em] text-[#d4a24a]"
           style={{ animationDelay: '40ms' }}
@@ -569,16 +538,14 @@ function AboutPage() {
             </div>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 sm:grid-cols-3 lg:grid-cols-4">
               {SECTIONS.filter((s) => s.id !== 'about').map((s) => (
-                <a
+                <Link
                   key={s.id}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  to={s.href}
                   className="group inline-flex items-center gap-2.5 text-[12px] uppercase tracking-[0.16em] text-[#b8ad8d] no-underline transition-colors hover:text-[#f3ead0]"
                 >
                   <span className="h-1 w-1 flex-none rotate-45 bg-[rgba(212,162,74,0.5)] transition-colors group-hover:bg-[#d4a24a]" />
                   <span className="truncate">{s.label}</span>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
