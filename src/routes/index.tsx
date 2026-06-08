@@ -11,6 +11,7 @@ import homeRainbowImg from '#/assets/home_rainbow.jpeg'
 import infrastructureImg from '#/assets/infrastructure.png'
 import legalImg from '#/assets/legal.png'
 import researchImg from '#/assets/research.png'
+import { svgCoord } from '#/lib/svg'
 
 export const Route = createFileRoute('/')({ component: SacredGeometry })
 
@@ -90,8 +91,8 @@ function SacredGeometry() {
         <g>
           {Array.from({ length: 16 }).map((_, i) => {
             const a = (Math.PI / 8) * i - Math.PI / 16
-            const x2 = cx + Math.cos(a) * 480
-            const y2 = cy + Math.sin(a) * 480
+            const x2 = svgCoord(cx + Math.cos(a) * 480)
+            const y2 = svgCoord(cy + Math.sin(a) * 480)
             return (
               <line
                 key={i}

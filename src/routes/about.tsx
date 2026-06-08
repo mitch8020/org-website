@@ -3,6 +3,7 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import type { OutlineNode } from '#/lib/about-content'
 import { ARTICLES, CONTACT } from '#/lib/about-content'
 import { SECTIONS } from '#/lib/sections'
+import { svgCoord } from '#/lib/svg'
 
 export const Route = createFileRoute('/about')({
   head: () => ({
@@ -440,10 +441,10 @@ function AboutPage() {
               return (
                 <line
                   key={i}
-                  x1={100 + Math.cos(ang) * 78}
-                  y1={100 + Math.sin(ang) * 78}
-                  x2={100 + Math.cos(ang) * 96}
-                  y2={100 + Math.sin(ang) * 96}
+                  x1={svgCoord(100 + Math.cos(ang) * 78)}
+                  y1={svgCoord(100 + Math.sin(ang) * 78)}
+                  x2={svgCoord(100 + Math.cos(ang) * 96)}
+                  y2={svgCoord(100 + Math.sin(ang) * 96)}
                   stroke="rgba(212,162,74,0.35)"
                   strokeWidth="0.6"
                 />

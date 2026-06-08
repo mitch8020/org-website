@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import type { SECTIONS } from '#/lib/sections';
 import { GRID_ORDER } from '#/lib/sections'
+import { svgCoord } from '#/lib/svg'
 
 export const Route = createFileRoute('/archive/2')({ component: SacredGeometry })
 
@@ -47,8 +48,8 @@ function SacredGeometry() {
           <g className="v2-rays">
             {Array.from({ length: 16 }).map((_, i) => {
               const a = (Math.PI / 8) * i - Math.PI / 16
-              const x2 = cx + Math.cos(a) * 480
-              const y2 = cy + Math.sin(a) * 480
+              const x2 = svgCoord(cx + Math.cos(a) * 480)
+              const y2 = svgCoord(cy + Math.sin(a) * 480)
               return (
                 <line
                   key={i}
@@ -113,15 +114,15 @@ function SacredGeometry() {
                       {Array.from({ length: 8 }).map((_, k) => {
                         const a1 = (Math.PI / 4) * k - Math.PI / 8
                         const a2 = (Math.PI / 4) * (k + 1) - Math.PI / 8
-                        const x1 = Math.cos(a1) * 44
-                        const y1 = Math.sin(a1) * 44
-                        const x2 = Math.cos(a2) * 44
-                        const y2 = Math.sin(a2) * 44
+                        const x1 = svgCoord(Math.cos(a1) * 44)
+                        const y1 = svgCoord(Math.sin(a1) * 44)
+                        const x2 = svgCoord(Math.cos(a2) * 44)
+                        const y2 = svgCoord(Math.sin(a2) * 44)
                         const shade = 0.18 + (k / 8) * 0.7
                         return (
                           <polygon
                             key={k}
-                            points={`0,0 ${x1.toFixed(2)},${y1.toFixed(2)} ${x2.toFixed(2)},${y2.toFixed(2)}`}
+                            points={`0,0 ${x1},${y1} ${x2},${y2}`}
                             fill={`rgba(232,224,206,${shade})`}
                             stroke="rgba(11,13,18,0.6)"
                             strokeWidth="0.6"

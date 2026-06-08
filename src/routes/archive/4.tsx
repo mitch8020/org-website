@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import type { SECTIONS } from '#/lib/sections';
 import { GRID_ORDER } from '#/lib/sections'
+import { svgCoord } from '#/lib/svg'
 import type { JSX } from 'react'
 
 export const Route = createFileRoute('/archive/4')({ component: TarotAtelier })
@@ -99,10 +100,10 @@ function CenterGlyph() {
           return (
             <line
               key={i}
-              x1={Math.cos(a) * 10}
-              y1={Math.sin(a) * 10}
-              x2={Math.cos(a) * 36}
-              y2={Math.sin(a) * 36}
+              x1={svgCoord(Math.cos(a) * 10)}
+              y1={svgCoord(Math.sin(a) * 10)}
+              x2={svgCoord(Math.cos(a) * 36)}
+              y2={svgCoord(Math.sin(a) * 36)}
             />
           )
         })}
@@ -130,8 +131,8 @@ function TarotAtelier() {
                     key={i}
                     x1={0}
                     y1={0}
-                    x2={Math.cos(a) * 80}
-                    y2={Math.sin(a) * 80}
+                    x2={svgCoord(Math.cos(a) * 80)}
+                    y2={svgCoord(Math.sin(a) * 80)}
                   />
                 )
               })}

@@ -4,12 +4,9 @@ import { GRID_ORDER } from '#/lib/sections'
 
 export const Route = createFileRoute('/archive/1')({ component: EditorialBureau })
 
-function EditorialBureau() {
-  const now = new Date()
-  const dateStr = now
-    .toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' })
-    .toUpperCase()
+const ISSUE_DATE = '07 NOVEMBER 2025'
 
+function EditorialBureau() {
   return (
     <div className="variant-1">
       <style>{styles}</style>
@@ -21,7 +18,7 @@ function EditorialBureau() {
             <span className="v1-mast-title">
               The Octagon Religious Research Group
             </span>
-            <span className="v1-mast-meta">EST. MMXXV &nbsp;&middot;&nbsp; {dateStr}</span>
+            <span className="v1-mast-meta">EST. MMXXV &nbsp;&middot;&nbsp; {ISSUE_DATE}</span>
           </div>
           <span className="v1-mast-rule" />
           <div className="v1-mast-sub">
