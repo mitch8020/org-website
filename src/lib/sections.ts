@@ -23,7 +23,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   {
     id: 'community',
     label: 'Community',
-    href: 'https://www.icloud.com/pages/073iADvUsVFbPTTVpWDxNN0UQ#Community',
+    href: '/community',
     roman: 'II',
     numeral: '02',
     tagline: 'Gatherings, members, kinship',
@@ -33,7 +33,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   {
     id: 'beliefs',
     label: 'Beliefs',
-    href: 'https://www.icloud.com/pages/061X28mxN48hLJPjs2yM3pbfQ#Beliefs',
+    href: '/beliefs',
     roman: 'III',
     numeral: '03',
     tagline: 'Tenets, doctrine, questions',
@@ -43,7 +43,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   {
     id: 'infrastructure',
     label: 'Infrastructure',
-    href: 'https://www.icloud.com/pages/0a1-GHMzTAs8KAJQB6LSU33PQ#Infrastructure',
+    href: '/infrastructure',
     roman: 'IV',
     numeral: '04',
     tagline: 'The tower, sanctuaries, sites',
@@ -53,7 +53,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   {
     id: 'research',
     label: 'Research',
-    href: 'https://www.icloud.com/pages/07eGdJgcVdbDKtccJ2sfY9UBQ#Research',
+    href: '/research',
     roman: 'V',
     numeral: '05',
     tagline: 'Studies, findings, methods',
@@ -63,7 +63,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   {
     id: 'legal',
     label: 'Legal',
-    href: 'https://www.icloud.com/pages/0d7SeKZ_1IPGDvaHcfnCFxKlw#Legal',
+    href: '/legal',
     roman: 'VI',
     numeral: '06',
     tagline: 'Charter, ethics, governance',
@@ -73,7 +73,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   {
     id: 'future',
     label: 'Future Ideas',
-    href: 'https://www.icloud.com/pages/064hK5gn5hVgdmLoFNagM1UoQ#Future_Ideas',
+    href: '/future-ideas',
     roman: 'VII',
     numeral: '07',
     tagline: 'Speculation, horizons, what comes',
@@ -83,7 +83,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   {
     id: 'donations',
     label: 'Gifts & Contributions',
-    href: 'https://www.icloud.com/pages/006O_K9mPqEn3NaRNxnEx88Jg#Gifts/Donations',
+    href: '/gifts-contributions',
     roman: 'VIII',
     numeral: '08',
     tagline: 'Offerings, patronage, tithes',

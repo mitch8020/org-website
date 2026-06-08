@@ -9,6 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResearchRouteImport } from './routes/research'
+import { Route as LegalRouteImport } from './routes/legal'
+import { Route as InfrastructureRouteImport } from './routes/infrastructure'
+import { Route as GiftsContributionsRouteImport } from './routes/gifts-contributions'
+import { Route as FutureIdeasRouteImport } from './routes/future-ideas'
+import { Route as CommunityRouteImport } from './routes/community'
+import { Route as BeliefsRouteImport } from './routes/beliefs'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as Archive5RouteImport } from './routes/archive/5'
@@ -17,6 +24,41 @@ import { Route as Archive3RouteImport } from './routes/archive/3'
 import { Route as Archive2RouteImport } from './routes/archive/2'
 import { Route as Archive1RouteImport } from './routes/archive/1'
 
+const ResearchRoute = ResearchRouteImport.update({
+  id: '/research',
+  path: '/research',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InfrastructureRoute = InfrastructureRouteImport.update({
+  id: '/infrastructure',
+  path: '/infrastructure',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiftsContributionsRoute = GiftsContributionsRouteImport.update({
+  id: '/gifts-contributions',
+  path: '/gifts-contributions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FutureIdeasRoute = FutureIdeasRouteImport.update({
+  id: '/future-ideas',
+  path: '/future-ideas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BeliefsRoute = BeliefsRouteImport.update({
+  id: '/beliefs',
+  path: '/beliefs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -56,6 +98,13 @@ const Archive1Route = Archive1RouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/beliefs': typeof BeliefsRoute
+  '/community': typeof CommunityRoute
+  '/future-ideas': typeof FutureIdeasRoute
+  '/gifts-contributions': typeof GiftsContributionsRoute
+  '/infrastructure': typeof InfrastructureRoute
+  '/legal': typeof LegalRoute
+  '/research': typeof ResearchRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
@@ -65,6 +114,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/beliefs': typeof BeliefsRoute
+  '/community': typeof CommunityRoute
+  '/future-ideas': typeof FutureIdeasRoute
+  '/gifts-contributions': typeof GiftsContributionsRoute
+  '/infrastructure': typeof InfrastructureRoute
+  '/legal': typeof LegalRoute
+  '/research': typeof ResearchRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
@@ -75,6 +131,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/beliefs': typeof BeliefsRoute
+  '/community': typeof CommunityRoute
+  '/future-ideas': typeof FutureIdeasRoute
+  '/gifts-contributions': typeof GiftsContributionsRoute
+  '/infrastructure': typeof InfrastructureRoute
+  '/legal': typeof LegalRoute
+  '/research': typeof ResearchRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
@@ -86,6 +149,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/beliefs'
+    | '/community'
+    | '/future-ideas'
+    | '/gifts-contributions'
+    | '/infrastructure'
+    | '/legal'
+    | '/research'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
@@ -95,6 +165,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/beliefs'
+    | '/community'
+    | '/future-ideas'
+    | '/gifts-contributions'
+    | '/infrastructure'
+    | '/legal'
+    | '/research'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
@@ -104,6 +181,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/beliefs'
+    | '/community'
+    | '/future-ideas'
+    | '/gifts-contributions'
+    | '/infrastructure'
+    | '/legal'
+    | '/research'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
@@ -114,6 +198,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  BeliefsRoute: typeof BeliefsRoute
+  CommunityRoute: typeof CommunityRoute
+  FutureIdeasRoute: typeof FutureIdeasRoute
+  GiftsContributionsRoute: typeof GiftsContributionsRoute
+  InfrastructureRoute: typeof InfrastructureRoute
+  LegalRoute: typeof LegalRoute
+  ResearchRoute: typeof ResearchRoute
   Archive1Route: typeof Archive1Route
   Archive2Route: typeof Archive2Route
   Archive3Route: typeof Archive3Route
@@ -123,6 +214,55 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/research': {
+      id: '/research'
+      path: '/research'
+      fullPath: '/research'
+      preLoaderRoute: typeof ResearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/infrastructure': {
+      id: '/infrastructure'
+      path: '/infrastructure'
+      fullPath: '/infrastructure'
+      preLoaderRoute: typeof InfrastructureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gifts-contributions': {
+      id: '/gifts-contributions'
+      path: '/gifts-contributions'
+      fullPath: '/gifts-contributions'
+      preLoaderRoute: typeof GiftsContributionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/future-ideas': {
+      id: '/future-ideas'
+      path: '/future-ideas'
+      fullPath: '/future-ideas'
+      preLoaderRoute: typeof FutureIdeasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/beliefs': {
+      id: '/beliefs'
+      path: '/beliefs'
+      fullPath: '/beliefs'
+      preLoaderRoute: typeof BeliefsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -178,6 +318,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  BeliefsRoute: BeliefsRoute,
+  CommunityRoute: CommunityRoute,
+  FutureIdeasRoute: FutureIdeasRoute,
+  GiftsContributionsRoute: GiftsContributionsRoute,
+  InfrastructureRoute: InfrastructureRoute,
+  LegalRoute: LegalRoute,
+  ResearchRoute: ResearchRoute,
   Archive1Route: Archive1Route,
   Archive2Route: Archive2Route,
   Archive3Route: Archive3Route,
