@@ -7,7 +7,7 @@ import beliefsImg from '#/assets/beliefs.png'
 import communityImg from '#/assets/community.png'
 import donationsImg from '#/assets/gifts_donations.png'
 import futureImg from '#/assets/future_ideas.png'
-import homeImg from '#/assets/home.png'
+import homeRainbowImg from '#/assets/home_rainbow.jpeg'
 import infrastructureImg from '#/assets/infrastructure.png'
 import legalImg from '#/assets/legal.png'
 import researchImg from '#/assets/research.png'
@@ -33,7 +33,6 @@ const IMAGES: Record<string, string> = {
   legal: legalImg,
   future: futureImg,
   donations: donationsImg,
-  home: homeImg,
 }
 
 function NavSquare({
@@ -47,7 +46,8 @@ function NavSquare({
   compact?: boolean
   onNavigate?: () => void
 }) {
-  const img = IMAGES[item.id] ?? null
+  const isHome = item.id === 'home'
+  const img = isHome ? homeRainbowImg : (IMAGES[item.id] ?? null)
 
   return (
     <Link
@@ -64,7 +64,7 @@ function NavSquare({
       {img ? (
         <span
           aria-hidden
-          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-300 ${active ? 'opacity-20' : 'opacity-20 group-hover:opacity-40'}`}
+          className={`absolute inset-0 bg-cover bg-center ${isHome ? 'animate-[v2-rotate_28s_linear_infinite]' : ''} transition-opacity duration-300 ${active ? 'opacity-20' : 'opacity-20 group-hover:opacity-40'}`}
           style={{ backgroundImage: `url(${img})` }}
         />
       ) : null}

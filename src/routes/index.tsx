@@ -179,7 +179,7 @@ function SacredGeometry() {
                   >
                     <div
                       aria-hidden
-                      className="absolute -inset-[10%] bg-cover bg-center animate-[v2-rotate_28s_linear_infinite]"
+                      className="absolute inset-0 bg-cover bg-center animate-[v2-rotate_28s_linear_infinite]"
                       style={{ backgroundImage: `url(${homeRainbowImg})` }}
                     />
                   </div>
