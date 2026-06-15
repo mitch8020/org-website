@@ -149,9 +149,6 @@ export function ReferencePage({ page }: { page: ReferencePageContent }) {
       <main className="relative z-[1] mx-auto max-w-[1120px] px-[clamp(16px,4vw,40px)] pb-24 pt-[clamp(112px,15vh,168px)]">
         <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-end">
           <div>
-            <div className="text-[10px] uppercase tracking-[0.46em] text-[var(--accent)]">
-              {section?.accession ?? 'ORG'}
-            </div>
             <h1 className="mt-5 max-w-[820px] break-words font-thin uppercase leading-[0.98] tracking-[0.04em] text-[#f6efd9] text-[clamp(28px,7vw,96px)] sm:tracking-[0.08em]">
               {page.title}
             </h1>
@@ -159,24 +156,6 @@ export function ReferencePage({ page }: { page: ReferencePageContent }) {
               {page.subtitle}
             </p>
           </div>
-
-          <aside className="border border-[rgba(236,226,196,0.14)] bg-[rgba(236,226,196,0.04)] p-5">
-            <div className="text-[10px] uppercase tracking-[0.34em] text-[#9f9676]">
-              Reference
-            </div>
-            <div className="mt-3 text-[22px] font-thin text-[#f3ead0]">
-              {page.lines.length}
-            </div>
-            <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-[#9f9676]">
-              Source lines
-            </div>
-            <Link
-              to="/"
-              className="mt-5 inline-flex text-[10px] uppercase tracking-[0.24em] text-[var(--accent)] no-underline transition-colors hover:text-white"
-            >
-              ORG Index
-            </Link>
-          </aside>
         </section>
 
         <article className="mt-12 border-y border-[rgba(236,226,196,0.12)] py-8">
