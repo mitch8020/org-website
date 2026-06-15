@@ -16,7 +16,7 @@ const LABELS: Record<string, string> = {
   about: 'About',
   community: 'Community',
   beliefs: 'Beliefs',
-  infrastructure: 'Infra',
+  infrastructure: 'Infrastructure',
   home: 'ORG',
   research: 'Research',
   legal: 'Legal',
@@ -81,7 +81,7 @@ function NavSquare({
       <span className="relative flex items-center justify-center px-1 text-center">
         <span
           className={`max-w-full truncate uppercase leading-none tracking-[0.08em] ${
-            compact ? 'text-[10px]' : 'text-[9px]'
+            compact ? 'text-[10px]' : 'text-[8.2px]'
           }`}
         >
           {LABELS[item.id] ?? item.label}
