@@ -4,7 +4,6 @@ import type { OutlineNode } from '#/lib/about-content'
 import { ARTICLES, CONTACT } from '#/lib/about-content'
 import { SiteNav } from '#/components/SiteNav'
 import { SECTIONS } from '#/lib/sections'
-import { svgCoord } from '#/lib/svg'
 
 export const Route = createFileRoute('/about')({
   head: () => ({
@@ -166,21 +165,7 @@ function ArticleBlock({ index }: { index: number }) {
       style={{ animationDelay: `${120 + index * 70}ms` }}
     >
       <div className="flex items-baseline gap-4 sm:gap-6">
-        <span
-          aria-hidden
-          className="select-none font-thin leading-none"
-          style={{
-            fontSize: 'clamp(40px,6.5vw,76px)',
-            color: 'rgba(212,162,74,0.13)',
-            WebkitTextStroke: '1px rgba(212,162,74,0.62)',
-          }}
-        >
-          {a.roman}
-        </span>
         <div>
-          <div className="mb-1 text-[10px] font-light uppercase tracking-[0.42em] text-[#d4a24a]">
-            Article&nbsp;{a.roman}
-          </div>
           <h2
             className="m-0 font-thin tracking-[-0.01em] text-[#f3ead0]"
             style={{ fontSize: 'clamp(22px,3vw,34px)' }}
@@ -217,21 +202,7 @@ function ContactBlock() {
   return (
     <section id="contact" data-article className="ab-rise scroll-mt-[104px]">
       <div className="flex items-baseline gap-4 sm:gap-6">
-        <span
-          aria-hidden
-          className="select-none font-thin leading-none"
-          style={{
-            fontSize: 'clamp(40px,6.5vw,76px)',
-            color: 'rgba(212,162,74,0.13)',
-            WebkitTextStroke: '1px rgba(212,162,74,0.62)',
-          }}
-        >
-          {CONTACT.roman}
-        </span>
         <div>
-          <div className="mb-1 text-[10px] font-light uppercase tracking-[0.42em] text-[#d4a24a]">
-            Article&nbsp;{CONTACT.roman}
-          </div>
           <h2
             className="m-0 font-thin tracking-[-0.01em] text-[#f3ead0]"
             style={{ fontSize: 'clamp(22px,3vw,34px)' }}
@@ -373,104 +344,12 @@ function AboutPage() {
 
       {/* hero */}
       <section className="relative z-[3] mx-auto max-w-[1180px] px-[clamp(16px,4vw,40px)] pb-[clamp(36px,6vh,64px)] pt-[clamp(132px,17vh,190px)] text-center">
-        <div
-          className="ab-rise text-[10px] uppercase tracking-[0.46em] text-[#d4a24a]"
-          style={{ animationDelay: '40ms' }}
-        >
-          The Founding Document · Articles&nbsp;I–IX
-        </div>
-
-        <div
-          className="ab-rise relative mx-auto my-7 grid place-items-center"
-          style={{
-            width: 'clamp(108px,16vw,168px)',
-            height: 'clamp(108px,16vw,168px)',
-            animationDelay: '120ms',
-          }}
-        >
-          <svg
-            viewBox="0 0 200 200"
-            aria-hidden
-            className="absolute inset-0 animate-[v2-rotate_44s_linear_infinite]"
-          >
-            <polygon
-              points={octagonPoints(100, 100, 96)}
-              fill="none"
-              stroke="rgba(212,162,74,0.55)"
-              strokeWidth="1"
-            />
-            <polygon
-              points={octagonPoints(100, 100, 78)}
-              fill="none"
-              stroke="rgba(232,224,206,0.18)"
-              strokeWidth="0.6"
-            />
-            {Array.from({ length: 8 }).map((_, i) => {
-              const ang = (Math.PI / 4) * i - Math.PI / 8
-              return (
-                <line
-                  key={i}
-                  x1={svgCoord(100 + Math.cos(ang) * 78)}
-                  y1={svgCoord(100 + Math.sin(ang) * 78)}
-                  x2={svgCoord(100 + Math.cos(ang) * 96)}
-                  y2={svgCoord(100 + Math.sin(ang) * 96)}
-                  stroke="rgba(212,162,74,0.35)"
-                  strokeWidth="0.6"
-                />
-              )
-            })}
-          </svg>
-          <svg viewBox="0 0 200 200" aria-hidden className="absolute inset-0">
-            <polygon
-              points={octagonPoints(100, 100, 58)}
-              fill="none"
-              stroke="rgba(212,162,74,0.45)"
-              strokeWidth="0.8"
-            />
-          </svg>
-          <span
-            className="relative font-thin uppercase tracking-[0.34em] text-[#f3ead0]"
-            style={{ fontSize: 'clamp(15px,2vw,22px)' }}
-          >
-            ORG
-          </span>
-        </div>
-
         <h1
           className="ab-rise m-0 font-thin uppercase leading-[0.95] tracking-[0.12em] text-[#f6efd9]"
           style={{ fontSize: 'clamp(44px,9vw,104px)', animationDelay: '200ms' }}
         >
           About&nbsp;Us
         </h1>
-        <div
-          className="ab-rise mt-3 text-[12px] uppercase tracking-[0.5em] text-[#b8ad8d]"
-          style={{ animationDelay: '260ms' }}
-        >
-          Contact &nbsp;·&nbsp; The Charter
-        </div>
-
-        <p
-          className="ab-rise mx-auto mt-7 max-w-[640px] font-light italic text-[#cdc2a4]"
-          style={{
-            fontSize: 'clamp(15px,2vw,18px)',
-            lineHeight: 1.65,
-            animationDelay: '320ms',
-          }}
-        >
-          Origin, mandate, and principals of the Octagon Religious-Research
-          Group &amp; Spirituality Centers.
-        </p>
-
-        <div
-          className="ab-rise mx-auto mt-7 flex max-w-[760px] flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[9.5px] uppercase tracking-[0.28em] text-[#9f9676]"
-          style={{ animationDelay: '380ms' }}
-        >
-          <span>Filed Under — Identity / Charter</span>
-          <span className="text-[#d4a24a]">•</span>
-          <span>Accession ORG-001.AU</span>
-          <span className="text-[#d4a24a]">•</span>
-          <span>Est. MMXXV</span>
-        </div>
 
         <div
           className="ab-rise mx-auto mt-8 inline-flex items-center gap-2.5 border border-[rgba(212,162,74,0.22)] bg-[rgba(212,162,74,0.04)] px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-[#b8ad8d]"
@@ -505,11 +384,6 @@ function AboutPage() {
                           : 'border-transparent text-[#9f9676] hover:border-[rgba(212,162,74,0.4)] hover:text-[#cdc2a4]'
                       }`}
                     >
-                      <span
-                        className={`w-7 flex-none text-[10px] tabular-nums tracking-wider ${on ? 'text-[#d4a24a]' : 'text-[#7d745a]'}`}
-                      >
-                        {item.roman}
-                      </span>
                       <span className="truncate font-light tracking-wide">
                         {item.label}
                       </span>
