@@ -365,7 +365,7 @@ function AboutPage() {
 
       {/* body + contents rail */}
       <div className="relative z-[3] mx-auto grid max-w-[1180px] grid-cols-1 gap-x-12 px-[clamp(16px,4vw,40px)] pb-24 lg:grid-cols-[210px_minmax(0,780px)] lg:justify-center">
-        <aside className="hidden lg:block">
+        <aside className="mb-10 lg:mb-0">
           <nav className="sticky top-[104px]">
             <div className="mb-4 text-[10px] uppercase tracking-[0.34em] text-[#9f9676]">
               Contents
@@ -403,54 +403,7 @@ function AboutPage() {
         </main>
       </div>
 
-      {/* footer */}
-      <footer className="relative z-[3] border-t border-[rgba(232,224,206,0.1)]">
-        <div className="mx-auto flex max-w-[1180px] flex-col gap-9 px-[clamp(16px,4vw,40px)] py-12">
-          <div>
-            <div className="mb-4 text-[10px] uppercase tracking-[0.34em] text-[#9f9676]">
-              Continue through the archive
-            </div>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 sm:grid-cols-3 lg:grid-cols-4">
-              {SECTIONS.filter((s) => s.id !== 'about').map((s) => (
-                <Link
-                  key={s.id}
-                  to={s.href}
-                  className="group inline-flex items-center gap-2.5 text-[12px] uppercase tracking-[0.16em] text-[#b8ad8d] no-underline transition-colors hover:text-[#f3ead0]"
-                >
-                  <span className="h-1 w-1 flex-none rotate-45 bg-[rgba(212,162,74,0.5)] transition-colors group-hover:bg-[#d4a24a]" />
-                  <span className="truncate">{s.label}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col items-start justify-between gap-5 border-t border-[rgba(232,224,206,0.08)] pt-7 sm:flex-row sm:items-center">
-            <Link
-              to="/"
-              className="group inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.28em] text-[#ece2c4] no-underline transition-colors hover:text-white"
-            >
-              <svg
-                viewBox="0 0 100 100"
-                className="h-5 w-5 transition-transform duration-500 group-hover:rotate-[22.5deg]"
-                aria-hidden
-              >
-                <polygon
-                  points={octagonPoints(50, 50, 46)}
-                  fill="none"
-                  stroke={GOLD}
-                  strokeWidth="3.5"
-                />
-              </svg>
-              Return to the Index
-            </Link>
-            <div className="flex items-center gap-4 text-[10px] uppercase tracking-[0.28em] text-[#7d745a]">
-              <span>© MMXXV ORG</span>
-              <span className="text-[#d4a24a]">·</span>
-              <span>All inquiries archived</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   )
 }
