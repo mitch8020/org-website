@@ -127,12 +127,9 @@ export function SiteNav() {
         <div className="flex h-16 items-center justify-between px-4 md:hidden">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.34em] text-[#ece2c4] no-underline"
+            className="inline-flex items-center text-[11px] uppercase tracking-[0.34em] text-[#ece2c4] no-underline"
             aria-label="ORG home"
           >
-            <span className="grid h-8 w-8 place-items-center border border-[#d4a24a] text-[10px] tracking-[0.12em] text-[#d4a24a]">
-              IX
-            </span>
             ORG
           </Link>
           <button
