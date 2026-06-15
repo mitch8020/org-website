@@ -78,14 +78,7 @@ function NavSquare({
             'linear-gradient(135deg, rgba(212,162,74,0.22), transparent 38%, rgba(120,174,162,0.12))',
         }}
       />
-      <span className="relative flex flex-col items-center justify-center gap-1 px-1 text-center">
-        <span
-          className={`font-light uppercase leading-none tracking-[0.16em] ${
-            compact ? 'text-[10px]' : 'text-[9px]'
-          } ${active ? 'text-[#0b0d12]' : 'text-[#d4a24a]'}`}
-        >
-          {item.roman}
-        </span>
+      <span className="relative flex items-center justify-center px-1 text-center">
         <span
           className={`max-w-full truncate uppercase leading-none tracking-[0.08em] ${
             compact ? 'text-[10px]' : 'text-[9px]'
