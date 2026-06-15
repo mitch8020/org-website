@@ -64,7 +64,7 @@ function NavSquare({
       {img ? (
         <span
           aria-hidden
-          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-300 ${active ? 'opacity-0' : 'opacity-20 group-hover:opacity-40'}`}
+          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-300 ${active ? 'opacity-20' : 'opacity-20 group-hover:opacity-40'}`}
           style={{ backgroundImage: `url(${img})` }}
         />
       ) : null}
