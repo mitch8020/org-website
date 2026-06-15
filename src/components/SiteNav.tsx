@@ -2,6 +2,15 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
 import { Menu, X } from 'lucide-react'
 import { GRID_ORDER } from '#/lib/sections'
+import aboutImg from '#/assets/about.png'
+import beliefsImg from '#/assets/beliefs.png'
+import communityImg from '#/assets/community.png'
+import donationsImg from '#/assets/gifts_donations.png'
+import futureImg from '#/assets/future_ideas.png'
+import homeImg from '#/assets/home.png'
+import infrastructureImg from '#/assets/infrastructure.png'
+import legalImg from '#/assets/legal.png'
+import researchImg from '#/assets/research.png'
 
 const LABELS: Record<string, string> = {
   about: 'About',
@@ -15,6 +24,18 @@ const LABELS: Record<string, string> = {
   donations: 'Gifts',
 }
 
+const IMAGES: Record<string, string> = {
+  about: aboutImg,
+  community: communityImg,
+  beliefs: beliefsImg,
+  infrastructure: infrastructureImg,
+  research: researchImg,
+  legal: legalImg,
+  future: futureImg,
+  donations: donationsImg,
+  home: homeImg,
+}
+
 function NavSquare({
   item,
   active,
@@ -26,6 +47,8 @@ function NavSquare({
   compact?: boolean
   onNavigate?: () => void
 }) {
+  const img = IMAGES[item.id] ?? null
+
   return (
     <Link
       to={item.href}
@@ -38,6 +61,13 @@ function NavSquare({
           : 'border-[rgba(236,226,196,0.22)] bg-[rgba(11,13,18,0.74)] text-[#ece2c4] hover:border-[#d4a24a] hover:bg-[rgba(212,162,74,0.12)]'
       } ${compact ? 'min-h-0' : ''}`}
     >
+      {img ? (
+        <span
+          aria-hidden
+          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-300 ${active ? 'opacity-0' : 'opacity-20 group-hover:opacity-40'}`}
+          style={{ backgroundImage: `url(${img})` }}
+        />
+      ) : null}
       <span
         aria-hidden
         className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
