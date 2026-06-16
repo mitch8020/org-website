@@ -161,7 +161,7 @@ function ArticleBlock({ index }: { index: number }) {
     <section
       id={a.id}
       data-article
-      className="ab-rise scroll-mt-[104px]"
+      className="ab-rise scroll-mt-[160px]"
       style={{ animationDelay: `${120 + index * 70}ms` }}
     >
       <div className="flex items-baseline gap-4 sm:gap-6">
@@ -200,7 +200,7 @@ function ArticleBlock({ index }: { index: number }) {
 /* ── contact finale (Article IX) ──────────────────────────────────────── */
 function ContactBlock() {
   return (
-    <section id="contact" data-article className="ab-rise scroll-mt-[104px]">
+    <section id="contact" data-article className="ab-rise scroll-mt-[160px]">
       <div className="flex items-baseline gap-4 sm:gap-6">
         <div>
           <h2
@@ -343,10 +343,10 @@ function AboutPage() {
       <SiteNav />
 
       {/* hero */}
-      <section className="relative z-[3] mx-auto max-w-[1180px] px-[clamp(16px,4vw,40px)] pb-[clamp(36px,6vh,64px)] pt-[clamp(132px,17vh,190px)] text-center">
+      <section className="relative z-[3] mx-auto max-w-[1180px] px-[clamp(16px,4vw,40px)] pb-[clamp(36px,6vh,64px)] pt-[clamp(180px,21vh,235px)] text-center">
         <h1
           className="ab-rise m-0 font-thin uppercase leading-[0.95] tracking-[0.12em] text-[#f6efd9]"
-          style={{ fontSize: 'clamp(44px,9vw,104px)', animationDelay: '200ms' }}
+          style={{ fontSize: 'clamp(44px,9vw,120px)', animationDelay: '200ms' }}
         >
           About&nbsp;Us
         </h1>
@@ -366,7 +366,7 @@ function AboutPage() {
       {/* body + contents rail */}
       <div className="relative z-[3] mx-auto grid max-w-[1180px] grid-cols-1 gap-x-12 px-[clamp(16px,4vw,40px)] pb-24 lg:grid-cols-[210px_minmax(0,780px)] lg:justify-center">
         <aside className="mb-10 lg:mb-0">
-          <nav className="sticky top-[104px]">
+          <nav className="sticky top-[160px]">
             <div className="mb-4 text-[10px] uppercase tracking-[0.34em] text-[#9f9676]">
               Contents
             </div>

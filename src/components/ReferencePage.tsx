@@ -146,7 +146,7 @@ export function ReferencePage({ page }: { page: ReferencePageContent }) {
         }}
       />
 
-      <main className="relative z-[1] mx-auto max-w-[1120px] px-[clamp(16px,4vw,40px)] pb-24 pt-[clamp(112px,15vh,168px)]">
+      <main className="relative z-[1] mx-auto max-w-[1120px] px-[clamp(16px,4vw,40px)] pb-24 pt-[clamp(160px,18vh,210px)]">
         <section className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-end">
           <div>
             <h1 className="mt-5 max-w-[820px] break-words font-thin uppercase leading-[0.98] tracking-[0.04em] text-[#f6efd9] text-[clamp(28px,7vw,96px)] sm:tracking-[0.08em]">
