@@ -44,7 +44,7 @@ const IMAGES: Record<string, string> = {
 }
 
 const cellWrapper =
-  'group relative z-[1] flex flex-col items-center gap-2 no-underline text-[#ece2c4] opacity-0 scale-[0.92] animate-[v2-pop_900ms_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-2.5'
+  'group relative z-[1] flex flex-col items-stretch overflow-hidden no-underline text-[#ece2c4] opacity-0 scale-[0.92] animate-[v2-pop_900ms_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-2.5'
 
 const octagonFrame =
   'aspect-square w-full outline outline-1 outline-offset-[-1px] transition-[transform,filter] duration-300 ease-out group-hover:scale-[1.02] [clip-path:polygon(29.3%_0,70.7%_0,100%_29.3%,100%_70.7%,70.7%_100%,29.3%_100%,0_70.7%,0_29.3%)]'
@@ -204,10 +204,11 @@ function SacredGeometry() {
                       : 'linear-gradient(140deg, rgba(28,30,38,0.92), rgba(15,17,22,0.92))',
                   }}
                 />
-                {/* <span className="block h-px w-4 bg-[#b8ad8d]/70 transition-colors duration-300 group-hover:bg-[#ece2c4] sm:w-6" /> */}
-                <h2 className="m-0 break-words text-center font-extralight uppercase leading-[1.15] tracking-[0.16em] text-[clamp(9px,1.1vw,14px)] sm:tracking-[0.2em] md:tracking-[0.26em]">
-                  {s.label}
-                </h2>
+                <div className="mt-auto w-full px-2 pb-1 text-center">
+                  <h2 className="m-0 break-words font-extralight uppercase leading-[1.15] tracking-[0.16em] text-[clamp(9px,1.1vw,14px)] sm:tracking-[0.2em] md:tracking-[0.26em]">
+                    {s.label}
+                  </h2>
+                </div>
               </>
             )
 
