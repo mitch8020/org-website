@@ -191,7 +191,51 @@ export function SiteNav() {
 
       {open ? (
         <div className="fixed inset-0 z-40 bg-[rgba(11,13,18,0.94)] px-4 pb-8 pt-24 backdrop-blur-md md:hidden">
-          <nav aria-label="Primary mobile" className="mx-auto max-w-[420px] grid grid-cols-3 gap-0">
+          <nav aria-label="Primary mobile" className="relative mx-auto max-w-[420px] grid grid-cols-3 gap-0">
+            {/* Matching larger perforation overlay for mobile 3-col menu. */}
+            {(() => {
+              const perfColor = 'rgba(236,226,196,0.72)'
+              const d = '20px'
+              const g = '16px'
+              const t = '4px'
+              const vGrad = `repeating-linear-gradient(to bottom, ${perfColor} 0, ${perfColor} ${d}, transparent ${d}, transparent calc(${d} + ${g}))`
+              const hGrad = `repeating-linear-gradient(to right, ${perfColor} 0, ${perfColor} ${d}, transparent ${d}, transparent calc(${d} + ${g}))`
+              const numTabs = 3
+              const step = 100 / numTabs
+              const vPositions = Array.from({ length: numTabs + 1 }, (_, k) => `${(k * step).toFixed(3)}%`)
+              const bgImages = [
+                ...vPositions.map(() => vGrad),
+                hGrad,
+                hGrad,
+              ]
+              const bgSizes = [
+                ...vPositions.map(() => `${t} 100%`),
+                `100% ${t}`,
+                `100% ${t}`,
+              ]
+              const bgPositions = [
+                ...vPositions.map((p) => `${p} 0%`),
+                `0% 0%`,
+                `0% 100%`,
+              ]
+              const bgRepeats = [
+                ...vPositions.map(() => 'no-repeat'),
+                'no-repeat',
+                'no-repeat',
+              ]
+              return (
+                <div
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none z-[5]"
+                  style={{
+                    backgroundImage: bgImages.join(','),
+                    backgroundSize: bgSizes.join(','),
+                    backgroundPosition: bgPositions.join(','),
+                    backgroundRepeat: bgRepeats.join(','),
+                  }}
+                />
+              )
+            })()}
             {GRID_ORDER.map((item) => (
               <NavSquare
                 key={item.id}
