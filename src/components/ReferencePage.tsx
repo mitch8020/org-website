@@ -30,14 +30,46 @@ function splitMarker(line: string) {
 }
 
 function renderLinkedText(text: string): ReactNode {
-  const parts = text.split(/((?:https?:\/\/|www\.)[^\s)]+)/g)
+  // Support markdown-style links [display text](https://url) for bold/underlined phrases from source docs
+  const mdLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g
+  const nodes: ReactNode[] = []
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+  while ((match = mdLinkRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(...splitBareUrls(text.slice(lastIndex, match.index)))
+    }
+    const display = match[1]
+    let href = match[2]
+    nodes.push(
+      <a
+        key={`md-${match.index}`}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[#f1d78a] underline decoration-[rgba(241,215,138,0.35)] underline-offset-4 transition-colors hover:text-white"
+      >
+        {display}
+      </a>
+    )
+    lastIndex = mdLinkRegex.lastIndex
+  }
+  if (lastIndex < text.length) {
+    nodes.push(...splitBareUrls(text.slice(lastIndex)))
+  }
+  return nodes.length > 0 ? nodes : text
+}
+
+function splitBareUrls(text: string): ReactNode[] {
+  const urlRegex = /((?:https?:\/\/|www\.)[^\s)]+)/g
+  const parts = text.split(urlRegex)
   return parts.map((part, index) => {
     if (!part) return null
     if (/^(?:https?:\/\/|www\.)/.test(part)) {
       const href = part.startsWith('www.') ? `https://${part}` : part
       return (
         <a
-          key={`${part}-${index}`}
+          key={`url-${index}`}
           href={href}
           target="_blank"
           rel="noopener noreferrer"
@@ -48,7 +80,7 @@ function renderLinkedText(text: string): ReactNode {
       )
     }
     return part
-  })
+  }).filter(Boolean) as ReactNode[]
 }
 
 function ReferenceLine({ line, index }: { line: string; index: number }) {
