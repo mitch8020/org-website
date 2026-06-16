@@ -55,13 +55,13 @@ function NavSquare({
       onClick={onNavigate}
       title={item.label}
       aria-label={item.label}
-      className={`group no-underline transition-all duration-300 mr-[-1px] last:mr-0 w-full`}
+      className={`group no-underline transition-all duration-300 w-full`}
     >
       <div
-        className={`relative overflow-hidden border w-full aspect-square transition-all duration-300 ${
+        className={`relative overflow-hidden w-full aspect-square transition-all duration-300 ${
           active
             ? 'border-solid border-[#ece2c4] bg-[#ece2c4]'
-            : 'border-dashed border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.74)] hover:border-solid hover:border-[#d4a24a] hover:bg-[rgba(212,162,74,0.12)]'
+            : 'bg-[rgba(11,13,18,0.74)] hover:border-solid hover:border-[#d4a24a] hover:bg-[rgba(212,162,74,0.12)]'
         }`}
       >
         {img ? (
@@ -84,8 +84,8 @@ function NavSquare({
         <span
           className={`absolute bottom-0 left-0 right-0 z-10 text-center leading-none tracking-[0.04em] uppercase pb-1.5 pointer-events-none ${
             compact
-              ? 'text-[11px] font-semibold'
-              : 'text-[clamp(9px,1vw,12.5px)] font-bold'
+              ? 'text-[12px] font-semibold'
+              : 'text-[clamp(9px,1vw,13px)] font-bold'
           } ${active ? 'text-[#d4a24a]' : 'text-[#ece2c4] group-hover:text-[#f0e6d0]'}`}
           style={!active ? {
             background: 'linear-gradient(to top, rgba(11,13,18,0.65) 0%, rgba(11,13,18,0.3) 55%, transparent 100%)'
@@ -110,7 +110,51 @@ export function SiteNav() {
     <>
       <header className="fixed inset-x-0 top-0 z-50 bg-[rgba(11,13,18,0.78)] backdrop-blur-md">
         <div className="mx-auto hidden max-w-[1180px] px-[clamp(14px,3vw,32px)] py-4 md:block">
-          <nav aria-label="Primary" className="grid grid-cols-9 gap-0">
+          <nav aria-label="Primary" className="relative grid grid-cols-9 gap-0">
+            {/* Grid-level larger perforation lines matching the home page blotter sheet: 4px thick, sparse dashes (d=20px, g=16px) at every tab division + outer frame. */}
+            {(() => {
+              const perfColor = 'rgba(236,226,196,0.72)'
+              const d = '20px'
+              const g = '16px'
+              const t = '4px'
+              const vGrad = `repeating-linear-gradient(to bottom, ${perfColor} 0, ${perfColor} ${d}, transparent ${d}, transparent calc(${d} + ${g}))`
+              const hGrad = `repeating-linear-gradient(to right, ${perfColor} 0, ${perfColor} ${d}, transparent ${d}, transparent calc(${d} + ${g}))`
+              const numTabs = 9
+              const step = 100 / numTabs
+              const vPositions = Array.from({ length: numTabs + 1 }, (_, k) => `${(k * step).toFixed(3)}%`)
+              const bgImages = [
+                ...vPositions.map(() => vGrad),
+                hGrad,
+                hGrad,
+              ]
+              const bgSizes = [
+                ...vPositions.map(() => `${t} 100%`),
+                `100% ${t}`,
+                `100% ${t}`,
+              ]
+              const bgPositions = [
+                ...vPositions.map((p) => `${p} 0%`),
+                `0% 0%`,
+                `0% 100%`,
+              ]
+              const bgRepeats = [
+                ...vPositions.map(() => 'no-repeat'),
+                'no-repeat',
+                'no-repeat',
+              ]
+              return (
+                <div
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none z-[5]"
+                  style={{
+                    backgroundImage: bgImages.join(','),
+                    backgroundSize: bgSizes.join(','),
+                    backgroundPosition: bgPositions.join(','),
+                    backgroundRepeat: bgRepeats.join(','),
+                  }}
+                />
+              )
+            })()}
             {GRID_ORDER.map((item) => (
               <NavSquare
                 key={item.id}
