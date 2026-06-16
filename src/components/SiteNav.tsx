@@ -55,7 +55,7 @@ function NavSquare({
       onClick={onNavigate}
       title={item.label}
       aria-label={item.label}
-      className={`group relative grid aspect-square place-items-center overflow-hidden border no-underline transition-all duration-300 ${
+      className={`group relative aspect-square overflow-hidden border no-underline transition-all duration-300 ${
         active
           ? 'border-[#ece2c4] bg-[#ece2c4] text-[#0b0d12]'
           : 'border-[rgba(236,226,196,0.22)] bg-[rgba(11,13,18,0.74)] text-[#ece2c4] hover:border-[#d4a24a] hover:bg-[rgba(212,162,74,0.12)]'
@@ -78,10 +78,10 @@ function NavSquare({
             'linear-gradient(135deg, rgba(212,162,74,0.22), transparent 38%, rgba(120,174,162,0.12))',
         }}
       />
-      <span className="relative flex items-center justify-center px-1 text-center">
+      <span className="absolute inset-x-0 bottom-[2px] flex items-center justify-center px-1 text-center">
         <span
-          className={`max-w-full truncate uppercase leading-none tracking-[0.08em] ${
-            compact ? 'text-[10px]' : 'text-[8.2px]'
+          className={`max-w-[92%] truncate uppercase leading-none tracking-[0.06em] ${
+            compact ? 'text-[9.5px]' : 'text-[7.5px]'
           }`}
         >
           {LABELS[item.id] ?? item.label}
