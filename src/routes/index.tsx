@@ -43,11 +43,23 @@ const IMAGES: Record<string, string> = {
   donations: donationsImg,
 }
 
-const cellWrapper =
-  'group relative z-[1] flex flex-col items-stretch overflow-hidden no-underline text-[#ece2c4] opacity-0 scale-[0.92] animate-[v2-pop_900ms_cubic-bezier(0.2,0.8,0.2,1)_forwards] sm:gap-2.5'
+const LABELS: Record<string, string> = {
+  about: 'About',
+  community: 'Community',
+  beliefs: 'Beliefs',
+  infrastructure: 'Infrastructure',
+  home: 'ORG',
+  research: 'Research',
+  legal: 'Legal',
+  future: 'Future',
+  donations: 'GIFTS AND CONTRIBUTIONS',
+}
 
-const octagonFrame =
-  'aspect-square w-full outline outline-1 outline-offset-[-1px] transition-[transform,filter] duration-300 ease-out group-hover:scale-[1.02] [clip-path:polygon(29.3%_0,70.7%_0,100%_29.3%,100%_70.7%,70.7%_100%,29.3%_100%,0_70.7%,0_29.3%)]'
+const cellWrapper =
+  'group relative z-[1] block w-full h-full no-underline text-[#ece2c4] opacity-0 scale-[0.92] animate-[v2-pop_900ms_cubic-bezier(0.2,0.8,0.2,1)_forwards]'
+
+const perforatedSquare =
+  'aspect-square w-full overflow-hidden transition-all duration-300'
 
 function SacredGeometry() {
   const cx = 500
@@ -115,49 +127,47 @@ function SacredGeometry() {
       </svg>
 
       <main className="relative z-[3] flex min-h-screen items-center justify-center px-[clamp(12px,4vw,56px)] py-[clamp(16px,4vw,28px)]">
-        <div className="relative grid w-full max-w-[min(1100px,calc(100vh-200px))] grid-cols-3 gap-x-[clamp(8px,2vw,30px)] gap-y-[clamp(8px,2vw,2px)]">
-          <svg
-            aria-hidden
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-0 z-0 h-full w-full"
-          >
-            <line
-              x1="33.333%"
-              y1="0"
-              x2="33.333%"
-              y2="100%"
-              stroke="rgba(232,224,206,0.22)"
-              strokeWidth="1"
-              strokeDasharray="10 6"
-            />
-            <line
-              x1="66.666%"
-              y1="0"
-              x2="66.666%"
-              y2="100%"
-              stroke="rgba(232,224,206,0.22)"
-              strokeWidth="1"
-              strokeDasharray="10 6"
-            />
-            <line
-              x1="0"
-              y1="33.333%"
-              x2="100%"
-              y2="33.333%"
-              stroke="rgba(232,224,206,0.22)"
-              strokeWidth="1"
-              strokeDasharray="10 6"
-            />
-            <line
-              x1="0"
-              y1="66.666%"
-              x2="100%"
-              y2="66.666%"
-              stroke="rgba(232,224,206,0.22)"
-              strokeWidth="1"
-              strokeDasharray="10 6"
-            />
-          </svg>
+        <div className="relative grid w-full max-w-[min(1400px,calc(100vh-60px))] grid-cols-3 gap-0">
+          {/* Grid-level perforation overlay for the entire 3x3 sheet.
+              Draws thick, sparse dashed perf lines exactly at the seams (0/33/66/100%)
+              so the 9 art squares fill edge-to-edge and touch with only the perfs between them. */}
+          {(() => {
+            const perfColor = 'rgba(236,226,196,0.72)'
+            const d = '20px'
+            const g = '16px'
+            const t = '4px'
+            const vGrad = `repeating-linear-gradient(to bottom, ${perfColor} 0, ${perfColor} ${d}, transparent ${d}, transparent calc(${d} + ${g}))`
+            const hGrad = `repeating-linear-gradient(to right, ${perfColor} 0, ${perfColor} ${d}, transparent ${d}, transparent calc(${d} + ${g}))`
+            const positions = ['0%', '33.333%', '66.666%', '100%']
+            const bgImages = [
+              ...positions.map(() => vGrad),
+              ...positions.map(() => hGrad),
+            ]
+            const bgSizes = [
+              ...positions.map(() => `${t} 100%`),
+              ...positions.map(() => `100% ${t}`),
+            ]
+            const bgPositions = [
+              ...positions.map((p) => `${p} 0%`),
+              ...positions.map((p) => `0% ${p}`),
+            ]
+            const bgRepeats = [
+              ...positions.map(() => 'no-repeat'),
+              ...positions.map(() => 'no-repeat'),
+            ]
+            return (
+              <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none z-[5]"
+                style={{
+                  backgroundImage: bgImages.join(','),
+                  backgroundSize: bgSizes.join(','),
+                  backgroundPosition: bgPositions.join(','),
+                  backgroundRepeat: bgRepeats.join(','),
+                }}
+              />
+            )
+          })()}
 
           {GRID_ORDER.map((entry, i) => {
             const isCenter = entry.id === 'home'
@@ -171,22 +181,29 @@ function SacredGeometry() {
                 <Link
                   key={entry.id}
                   to="/"
+                  title="ORG"
+                  aria-label="ORG"
                   className={cellWrapper}
                   style={{ animationDelay: `${delay}ms` }}
                 >
                   <div
-                    className={`${octagonFrame} relative overflow-hidden bg-[#0b0d12] outline-[rgba(236,226,196,0.45)]`}
+                    className={`${perforatedSquare} relative group-hover:border-[3px] group-hover:border-solid group-hover:border-[#d4a24a]`}
                   >
                     <div
                       aria-hidden
                       className="absolute inset-0 bg-cover bg-center animate-[v2-rotate_28s_linear_infinite]"
                       style={{ backgroundImage: `url(${homeRainbowImg})` }}
                     />
+                    <span
+                      aria-hidden
+                      className="absolute bottom-[5px] left-0 right-0 z-[20] text-center leading-none tracking-[0.04em] uppercase pb-1.5 pointer-events-none text-[clamp(11px,1.8vw,28px)] font-bold text-[#ece2c4] group-hover:text-[#f0e6d0]"
+                      style={{
+                        background: 'linear-gradient(to top, rgba(11,13,18,0.65) 0%, rgba(11,13,18,0.3) 55%, transparent 100%)'
+                      }}
+                    >
+                      {LABELS.home}
+                    </span>
                   </div>
-                  {/* <span className="block h-px w-5 bg-[#b8ad8d] transition-colors duration-300 group-hover:bg-[#ece2c4] sm:w-7" /> */}
-                  <h2 className="m-0 font-thin uppercase leading-none tracking-[0.4em] text-[clamp(12px,1.5vw,18px)] sm:tracking-[0.5em]">
-                    ORG
-                  </h2>
                 </Link>
               )
             }
@@ -195,27 +212,36 @@ function SacredGeometry() {
             const img = IMAGES[s.id]
             const isInternal = s.href.startsWith('/')
             const inner = (
-              <>
-                <div
-                  className={`${octagonFrame} bg-cover bg-center outline-[rgba(232,226,196,0.18)] group-hover:brightness-110`}
+              <div
+                className={`${perforatedSquare} relative group-hover:border-[3px] group-hover:border-solid group-hover:border-[#d4a24a]`}
+              >
+                <span
+                  aria-hidden
+                  className="absolute inset-0 bg-cover bg-center"
                   style={{
                     backgroundImage: img
                       ? `url(${img})`
                       : 'linear-gradient(140deg, rgba(28,30,38,0.92), rgba(15,17,22,0.92))',
                   }}
                 />
-                <div className="mt-auto w-full px-2 pb-1 text-center">
-                  <h2 className="m-0 break-words font-extralight uppercase leading-[1.15] tracking-[0.16em] text-[clamp(9px,1.1vw,14px)] sm:tracking-[0.2em] md:tracking-[0.26em]">
-                    {s.label}
-                  </h2>
-                </div>
-              </>
+                <span
+                  aria-hidden
+                  className="absolute bottom-[5px] left-0 right-0 z-[20] text-center leading-none tracking-[0.04em] uppercase pb-1.5 pointer-events-none text-[clamp(11px,1.8vw,28px)] font-bold text-[#ece2c4] group-hover:text-[#f0e6d0]"
+                  style={{
+                    background: 'linear-gradient(to top, rgba(11,13,18,0.65) 0%, rgba(11,13,18,0.3) 55%, transparent 100%)'
+                  }}
+                >
+                  {LABELS[s.id] ?? s.label}
+                </span>
+              </div>
             )
 
             return isInternal ? (
               <Link
                 key={s.id}
                 to={s.href}
+                title={s.label}
+                aria-label={s.label}
                 className={cellWrapper}
                 style={{ animationDelay: `${delay}ms` }}
               >
@@ -227,6 +253,8 @@ function SacredGeometry() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                title={s.label}
+                aria-label={s.label}
                 className={cellWrapper}
                 style={{ animationDelay: `${delay}ms` }}
               >
