@@ -24,10 +24,8 @@ export const REFERENCE_PAGES = [
       "I. Video Calls With Partner (or supported) Organizations (and/or Churches)",
       "A. [Weekly Assembly with Moshe Jacobson from Entheo Community](https://airtable.com/appbVGvgHR52W0qp5/shr8Q8Iz11qX8ZX4z?gO7uy=allRecords&detail=eyJwYWdlSWQiOiJwYWd3SlZYZEtyU09QSlZKMSIsInJvd0lkIjoicmVjRnpCaVRDS3BtNWlvdDAiLCJzaG93Q29tbWVudHMiOmZhbHNlLCJxdWVyeU9yaWdpbkhpbnQiOnsidHlwZSI6InBhZ2VFbGVtZW50IiwiZWxlbWVudElkIjoicGVsUmxPUllheTNtdEtVSG0iLCJxdWVyeUNvbnRhaW5lcklkIjoicGVsNDh1NXkwM2NvZ083dXkiLCJzYXZlZEZpbHRlclNldElkIjoic2ZzUWV6M2xmNVk5UDJiZVIifX0)",
       "1. Wednesdays, 10:30 AM-12:00 PM EST, via Google Meet",
-      "2. Pricing",
-      "a) $10/month as a member of Entheo Community",
-      "b) $10/meeting as a non-member",
-      "B. [Psanctuary (The Mushroom Church)](https://ministries.psanctuary.org) Service",
+     
+      "B. [Psanctuary (The Mushroom Church) Service](https://zoom.us/j/92899681717?pwd=dkEyT2RlSkE2dFNxZnI1cnBGZk5rdz09)",
       "1. Sundays, 10:00-11:30 AM EST, via Zoom",
       "C. Simple Presence (A Contemplative Prayer Community)",
       "1. Silent Meditation (Every day) 7:30-7:50 AM EST",
@@ -55,7 +53,7 @@ export const REFERENCE_PAGES = [
       "a) May have never tried DMT before, to benefit from being able to see how it can be responsibly used in order to grow the community and discuss spirituality.",
       "b) Don't wish to use DMT once per month, but still want to participate in the mediation and discussion.",
       "C. Starting once per month",
-      "1. Help us decide on a day/time ([when2meet](https://u.when2meet.com))",
+      "1. [Help us decide on a day/time](https://www.when2meet.com/?34041601-tlm3R)",
       "IV. In-Person Ceremonies",
       "A. In 2025, we had several ceremonies with 4-7 people who sat in a circle, vaporized DMT, and discussed our spiritual beliefs as well as whatever else the sacrament brought up.",
       "B. In 2023-2024, we had several bonfires where various entheogens were consumed (up to 12 people), and spiritual discussions ensued.",
@@ -69,10 +67,10 @@ export const REFERENCE_PAGES = [
       "Churches/ Spiritual Organizations Please feel free to leave comments on your own reviews/experiences with any of these organizations/churches. Even if it is negative towards the ORG, we will not delete anyone's comment. We will eventually have an AI match-making service for people looking for spiritual community to sort the communities based on percentage of belief alignment, distance, supported entheogens, sacraments, etc., etc. The members should be able to choose what weight percentage is given to each of their selected conditions of interest.",
       "I. ORG",
       "A. About Us/Contact",
-      "II. Entheo Community",
+      "II. [Entheo Community](https://www.entheo.community)",
       "A. In November of 2025, ORG developed a partnership with EC because of their awesome entheogen safety training and ministry certification.",
       "1. New members who wish to receive entheogens from ORG (eventually) must first prove that they have completed the EC safety training and that they have made a donation to EC in order for them to continue improving their training.",
-      "2. Joining EC as a member is optional but encouraged.",
+      "2. Joining [Entheo Community](https://www.entheo.community) as a member is optional but encouraged.",
       "a) [Entheo Community Membership Application](https://forms.gle/UGyPvcKs6sC2xBGq8)",
       "B. Weekly Assembly with Moshe Jacobson",
       "1. Wednesdays, 10:30 AM-12:00 PM EST, via Google Meet",
@@ -98,7 +96,7 @@ export const REFERENCE_PAGES = [
       "A. Items that ORG offers for free to members (donations optional).",
       "III. Doctors Who Understand Psychedelics",
       "A. Dr. Emily Kulpa",
-      "1. Recommended by Moshe (from Entheo Community) for someone interested in trying psychedelic mushrooms but has a heart condition and was seeking a doctor's advice on how to proceed."
+      "1. Recommended by Moshe (from [Entheo Community](https://www.entheo.community)) for someone interested in trying psychedelic mushrooms but has a heart condition and was seeking a doctor's advice on how to proceed."
     ]
   },
   {
