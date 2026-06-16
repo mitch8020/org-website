@@ -21,7 +21,7 @@ const LABELS: Record<string, string> = {
   research: 'Research',
   legal: 'Legal',
   future: 'Future',
-  donations: 'Gifts',
+  donations: 'GIFTS AND CONTRIBUTIONS',
 }
 
 const IMAGES: Record<string, string> = {
@@ -82,10 +82,10 @@ function NavSquare({
           }}
         />
         <span
-          className={`absolute bottom-0 left-0 right-0 z-10 text-center leading-none tracking-[0.06em] uppercase pb-1.5 pointer-events-none ${
+          className={`absolute bottom-0 left-0 right-0 z-10 text-center leading-none tracking-[0.04em] uppercase pb-1.5 pointer-events-none ${
             compact
               ? 'text-[11px] font-semibold'
-              : 'text-[clamp(9px,0.95vw,12px)] font-bold'
+              : 'text-[clamp(9px,1vw,12.5px)] font-bold'
           } ${active ? 'text-[#d4a24a]' : 'text-[#ece2c4] group-hover:text-[#f0e6d0]'}`}
           style={!active ? {
             background: 'linear-gradient(to top, rgba(11,13,18,0.65) 0%, rgba(11,13,18,0.3) 55%, transparent 100%)'
