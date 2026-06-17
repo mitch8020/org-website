@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as JoinRouteImport } from './routes/join'
 import { Route as InfrastructureRouteImport } from './routes/infrastructure'
 import { Route as GiftsContributionsRouteImport } from './routes/gifts-contributions'
 import { Route as FutureIdeasRouteImport } from './routes/future-ideas'
@@ -32,6 +33,11 @@ const ResearchRoute = ResearchRouteImport.update({
 const LegalRoute = LegalRouteImport.update({
   id: '/legal',
   path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinRoute = JoinRouteImport.update({
+  id: '/join',
+  path: '/join',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InfrastructureRoute = InfrastructureRouteImport.update({
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/future-ideas': typeof FutureIdeasRoute
   '/gifts-contributions': typeof GiftsContributionsRoute
   '/infrastructure': typeof InfrastructureRoute
+  '/join': typeof JoinRoute
   '/legal': typeof LegalRoute
   '/research': typeof ResearchRoute
   '/archive/1': typeof Archive1Route
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/future-ideas': typeof FutureIdeasRoute
   '/gifts-contributions': typeof GiftsContributionsRoute
   '/infrastructure': typeof InfrastructureRoute
+  '/join': typeof JoinRoute
   '/legal': typeof LegalRoute
   '/research': typeof ResearchRoute
   '/archive/1': typeof Archive1Route
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/future-ideas': typeof FutureIdeasRoute
   '/gifts-contributions': typeof GiftsContributionsRoute
   '/infrastructure': typeof InfrastructureRoute
+  '/join': typeof JoinRoute
   '/legal': typeof LegalRoute
   '/research': typeof ResearchRoute
   '/archive/1': typeof Archive1Route
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/future-ideas'
     | '/gifts-contributions'
     | '/infrastructure'
+    | '/join'
     | '/legal'
     | '/research'
     | '/archive/1'
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/future-ideas'
     | '/gifts-contributions'
     | '/infrastructure'
+    | '/join'
     | '/legal'
     | '/research'
     | '/archive/1'
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/future-ideas'
     | '/gifts-contributions'
     | '/infrastructure'
+    | '/join'
     | '/legal'
     | '/research'
     | '/archive/1'
@@ -203,6 +215,7 @@ export interface RootRouteChildren {
   FutureIdeasRoute: typeof FutureIdeasRoute
   GiftsContributionsRoute: typeof GiftsContributionsRoute
   InfrastructureRoute: typeof InfrastructureRoute
+  JoinRoute: typeof JoinRoute
   LegalRoute: typeof LegalRoute
   ResearchRoute: typeof ResearchRoute
   Archive1Route: typeof Archive1Route
@@ -226,6 +239,13 @@ declare module '@tanstack/react-router' {
       path: '/legal'
       fullPath: '/legal'
       preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join': {
+      id: '/join'
+      path: '/join'
+      fullPath: '/join'
+      preLoaderRoute: typeof JoinRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/infrastructure': {
@@ -323,6 +343,7 @@ const rootRouteChildren: RootRouteChildren = {
   FutureIdeasRoute: FutureIdeasRoute,
   GiftsContributionsRoute: GiftsContributionsRoute,
   InfrastructureRoute: InfrastructureRoute,
+  JoinRoute: JoinRoute,
   LegalRoute: LegalRoute,
   ResearchRoute: ResearchRoute,
   Archive1Route: Archive1Route,
