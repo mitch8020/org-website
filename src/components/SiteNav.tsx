@@ -81,6 +81,36 @@ function NavSquare({
               'linear-gradient(135deg, rgba(212,162,74,0.22), transparent 38%, rgba(120,174,162,0.12))',
           }}
         />
+
+        {isHome && (
+          <>
+            {/* Join button - upper left of ORG tab, matching stamp style */}
+            <Link
+              to="/join"
+              onClick={(e) => e.stopPropagation()}
+              aria-label="Join the ORG or access member portal"
+              title="Join or sign in as a member"
+              className="absolute top-1 left-1 z-20 grid h-4 w-4 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.7)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+            >
+              <UserPlus size={10} />
+            </Link>
+
+            {/* Search button - upper right of ORG tab, matching stamp style */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.dispatchEvent(new CustomEvent('org:open-search'));
+              }}
+              aria-label="Search the archive"
+              title="Search the ORG archive (⌘K)"
+              className="absolute top-1 right-1 z-20 grid h-4 w-4 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.7)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+            >
+              <Search size={10} />
+            </button>
+          </>
+        )}
+
         <span
           className={`absolute bottom-0 left-0 right-0 z-10 text-center leading-none tracking-[0.04em] uppercase pb-1.5 pointer-events-none ${
             compact
@@ -105,10 +135,6 @@ export function SiteNav() {
   useEffect(() => {
     setOpen(false)
   }, [location.pathname])
-
-  function openSearch() {
-    window.dispatchEvent(new CustomEvent('org:open-search'))
-  }
 
   return (
     <>
@@ -172,27 +198,6 @@ export function SiteNav() {
               />
             ))}
           </nav>
-
-          {/* Search trigger — mini perforated stamp, absolute so 9-col grid is untouched */}
-          <button
-            type="button"
-            onClick={openSearch}
-            aria-label="Search the archive"
-            title="Search the ORG archive (⌘K)"
-            className="absolute right-0 top-1/2 -translate-y-1/2 mr-1 grid h-7 w-7 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.6)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
-          >
-            <Search size={14} />
-          </button>
-
-          {/* Join / Members stamp — next to search */}
-          <Link
-            to="/join"
-            aria-label="Join the ORG or access member portal"
-            title="Join or sign in as a member"
-            className="absolute right-9 top-1/2 -translate-y-1/2 mr-1 grid h-7 w-7 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.6)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
-          >
-            <UserPlus size={14} />
-          </Link>
         </div>
 
         <div className="flex h-16 items-center justify-between px-4 md:hidden">
@@ -202,25 +207,6 @@ export function SiteNav() {
             aria-label="ORG home"
           >
             ORG
-          </Link>
-
-          {/* Mobile search stamp */}
-          <button
-            type="button"
-            onClick={openSearch}
-            aria-label="Search the archive"
-            className="mr-1.5 grid h-9 w-9 place-items-center border border-[rgba(236,226,196,0.28)] bg-[rgba(11,13,18,0.86)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
-          >
-            <Search size={16} />
-          </button>
-
-          {/* Mobile join stamp */}
-          <Link
-            to="/join"
-            aria-label="Join the ORG or access member portal"
-            className="mr-1.5 grid h-9 w-9 place-items-center border border-[rgba(236,226,196,0.28)] bg-[rgba(11,13,18,0.86)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
-          >
-            <UserPlus size={16} />
           </Link>
 
           <button
