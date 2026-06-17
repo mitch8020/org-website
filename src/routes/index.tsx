@@ -12,6 +12,7 @@ import infrastructureImg from '#/assets/infrastructure.png'
 import legalImg from '#/assets/legal.png'
 import researchImg from '#/assets/research.png'
 import { svgCoord } from '#/lib/svg'
+import { UserPlus, Search } from 'lucide-react'
 
 export const Route = createFileRoute('/')({ component: SacredGeometry })
 
@@ -186,11 +187,8 @@ function SacredGeometry() {
 
             if (isCenter) {
               return (
-                <Link
+                <div
                   key={entry.id}
-                  to="/"
-                  title="ORG"
-                  aria-label="ORG"
                   className={cellWrapper}
                   style={{ animationDelay: `${delay}ms` }}
                 >
@@ -202,6 +200,32 @@ function SacredGeometry() {
                       className="absolute inset-0 bg-cover bg-center animate-[v2-rotate_28s_linear_infinite]"
                       style={{ backgroundImage: `url(${homeRainbowImg})` }}
                     />
+
+                    {/* Join button (person +) - upper left of ORG tab, same as nav tabs */}
+                    <Link
+                      to="/join"
+                      onClick={(e) => e.stopPropagation()}
+                      aria-label="Join the ORG or access member portal"
+                      title="Join or sign in as a member"
+                      className="absolute top-1 left-1 z-[30] grid h-8 w-8 place-items-center border border-[rgba(236,226,196,0.4)] bg-[rgba(11,13,18,0.85)] text-[#d4a24a] backdrop-blur transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+                    >
+                      <UserPlus size={20} />
+                    </Link>
+
+                    {/* Search button (magnifying glass) - upper right of ORG tab, same as nav tabs */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openSearch();
+                      }}
+                      aria-label="Search the archive"
+                      title="Search the ORG archive (⌘K)"
+                      className="absolute top-1 right-1 z-[30] grid h-8 w-8 place-items-center border border-[rgba(236,226,196,0.4)] bg-[rgba(11,13,18,0.85)] text-[#d4a24a] backdrop-blur transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+                    >
+                      <Search size={20} />
+                    </button>
+
                     <span
                       aria-hidden
                       className="absolute bottom-[5px] left-0 right-0 z-[20] text-center leading-none tracking-[0.04em] uppercase pb-1.5 pointer-events-none text-[clamp(11px,1.8vw,28px)] font-bold text-[#ece2c4] group-hover:text-[#f0e6d0]"
@@ -212,7 +236,7 @@ function SacredGeometry() {
                       {LABELS.home}
                     </span>
                   </div>
-                </Link>
+                </div>
               )
             }
 
@@ -272,25 +296,6 @@ function SacredGeometry() {
           })}
         </div>
       </main>
-
-      {/* Subtle blotter stamp triggers — home has no top nav */}
-      <div className="fixed right-3 top-3 z-[60] flex flex-col items-end gap-1.5 md:right-5 md:top-4">
-        <button
-          type="button"
-          onClick={openSearch}
-          aria-label="Search the archive"
-          title="Search the ORG archive (⌘K)"
-          className="grid h-8 w-8 place-items-center border border-[rgba(236,226,196,0.4)] bg-[rgba(11,13,18,0.75)] text-[#d4a24a] backdrop-blur transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
-        >
-          <span aria-hidden className="text-[11px] font-bold tracking-[0.2em]">⌘</span>
-        </button>
-        <Link
-          to="/join"
-          className="border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.75)] px-2.5 py-px text-[9px] uppercase tracking-[0.22em] text-[#d4a24a] backdrop-blur transition hover:border-[#d4a24a] hover:text-[#f0e6d0]"
-        >
-          Join
-        </Link>
-      </div>
     </div>
   )
 }
