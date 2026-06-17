@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
-import { Menu, X, Search } from 'lucide-react'
+import { Menu, X, Search, UserPlus } from 'lucide-react'
 import { GRID_ORDER } from '#/lib/sections'
 import aboutImg from '#/assets/about.png'
 import beliefsImg from '#/assets/beliefs.png'
@@ -183,6 +183,16 @@ export function SiteNav() {
           >
             <Search size={14} />
           </button>
+
+          {/* Join / Members stamp — next to search */}
+          <Link
+            to="/join"
+            aria-label="Join the ORG or access member portal"
+            title="Join or sign in as a member"
+            className="absolute right-9 top-1/2 -translate-y-1/2 mr-1 grid h-7 w-7 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.6)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+          >
+            <UserPlus size={14} />
+          </Link>
         </div>
 
         <div className="flex h-16 items-center justify-between px-4 md:hidden">
@@ -203,6 +213,15 @@ export function SiteNav() {
           >
             <Search size={16} />
           </button>
+
+          {/* Mobile join stamp */}
+          <Link
+            to="/join"
+            aria-label="Join the ORG or access member portal"
+            className="mr-1.5 grid h-9 w-9 place-items-center border border-[rgba(236,226,196,0.28)] bg-[rgba(11,13,18,0.86)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+          >
+            <UserPlus size={16} />
+          </Link>
 
           <button
             type="button"

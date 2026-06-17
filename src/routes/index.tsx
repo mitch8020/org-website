@@ -273,16 +273,24 @@ function SacredGeometry() {
         </div>
       </main>
 
-      {/* Subtle blotter stamp trigger for search — home has no top nav */}
-      <button
-        type="button"
-        onClick={openSearch}
-        aria-label="Search the archive"
-        title="Search the ORG archive (⌘K)"
-        className="fixed right-3 top-3 z-[60] grid h-8 w-8 place-items-center border border-[rgba(236,226,196,0.4)] bg-[rgba(11,13,18,0.75)] text-[#d4a24a] backdrop-blur transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0] md:right-5 md:top-4"
-      >
-        <span aria-hidden className="text-[11px] font-bold tracking-[0.2em]">⌘</span>
-      </button>
+      {/* Subtle blotter stamp triggers — home has no top nav */}
+      <div className="fixed right-3 top-3 z-[60] flex flex-col items-end gap-1.5 md:right-5 md:top-4">
+        <button
+          type="button"
+          onClick={openSearch}
+          aria-label="Search the archive"
+          title="Search the ORG archive (⌘K)"
+          className="grid h-8 w-8 place-items-center border border-[rgba(236,226,196,0.4)] bg-[rgba(11,13,18,0.75)] text-[#d4a24a] backdrop-blur transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+        >
+          <span aria-hidden className="text-[11px] font-bold tracking-[0.2em]">⌘</span>
+        </button>
+        <Link
+          to="/join"
+          className="border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.75)] px-2.5 py-px text-[9px] uppercase tracking-[0.22em] text-[#d4a24a] backdrop-blur transition hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+        >
+          Join
+        </Link>
+      </div>
     </div>
   )
 }
