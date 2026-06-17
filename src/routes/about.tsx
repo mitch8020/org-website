@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, useLocation, useNavigate } from '@tanstack/react-router'
 import type { OutlineNode } from '#/lib/about-content'
 import { ARTICLES, CONTACT } from '#/lib/about-content'
 import { SiteNav } from '#/components/SiteNav'
 import { SECTIONS } from '#/lib/sections'
+import { withHighlight } from '#/lib/search'
 
 export const Route = createFileRoute('/about')({
   head: () => ({
@@ -267,6 +268,12 @@ function ContactBlock() {
 
 /* ── page ─────────────────────────────────────────────────────────────── */
 function AboutPage() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const searchParams = new URLSearchParams(location.searchStr || '')
+  const searchTerm = searchParams.get('q') || undefined
+
   const toc = [
     ...ARTICLES.map((a) => ({ id: a.id, roman: a.roman, label: a.eyebrow })),
     { id: 'contact', roman: CONTACT.roman, label: CONTACT.eyebrow },
@@ -361,6 +368,13 @@ function AboutPage() {
           </span>
           A living document — revised as our knowledge and beliefs evolve.
         </div>
+
+        {/* Light search context (full line highlights live on Reference pages) */}
+        {searchTerm && (
+          <div className="ab-rise mt-4 text-[10px] uppercase tracking-[0.34em] text-[#d4a24a]">
+            SEARCHING “{searchTerm}” — <button onClick={() => navigate({ to: location.pathname, search: {} })} className="underline decoration-dotted hover:text-[#f0e6d0]">CLEAR</button>
+          </div>
+        )}
       </section>
 
       {/* body + contents rail */}

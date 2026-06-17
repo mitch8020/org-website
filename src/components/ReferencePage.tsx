@@ -1,8 +1,9 @@
-import type { CSSProperties, ReactNode } from 'react'
-import { Link } from '@tanstack/react-router'
+import { useEffect, type CSSProperties, type ReactNode } from 'react'
+import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { SiteNav } from '#/components/SiteNav'
 import type { ReferencePageContent } from '#/lib/reference-pages'
 import { SECTIONS } from '#/lib/sections'
+import { withHighlight } from '#/lib/search'
 
 const ACCENTS: Record<string, string> = {
   community: '#78aea2',
@@ -29,7 +30,7 @@ function splitMarker(line: string) {
   return match ? { marker: match[1], text: match[2] } : null
 }
 
-function renderLinkedText(text: string): ReactNode {
+function renderLinkedText(text: string, highlightTerm?: string): ReactNode {
   // Support markdown-style links [display text](https://url) for bold/underlined phrases from source docs
   const mdLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g
   const nodes: ReactNode[] = []
@@ -37,7 +38,7 @@ function renderLinkedText(text: string): ReactNode {
   let match: RegExpExecArray | null
   while ((match = mdLinkRegex.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      nodes.push(...splitBareUrls(text.slice(lastIndex, match.index)))
+      nodes.push(...splitBareUrls(text.slice(lastIndex, match.index), highlightTerm))
     }
     const display = match[1]
     let href = match[2]
@@ -49,18 +50,18 @@ function renderLinkedText(text: string): ReactNode {
         rel="noopener noreferrer"
         className="text-[#f1d78a] underline decoration-[rgba(241,215,138,0.35)] underline-offset-4 transition-colors hover:text-white"
       >
-        {display}
+        {withHighlight(display, highlightTerm)}
       </a>
     )
     lastIndex = mdLinkRegex.lastIndex
   }
   if (lastIndex < text.length) {
-    nodes.push(...splitBareUrls(text.slice(lastIndex)))
+    nodes.push(...splitBareUrls(text.slice(lastIndex), highlightTerm))
   }
-  return nodes.length > 0 ? nodes : text
+  return nodes.length > 0 ? nodes : withHighlight(text, highlightTerm)
 }
 
-function splitBareUrls(text: string): ReactNode[] {
+function splitBareUrls(text: string, highlightTerm?: string): ReactNode[] {
   const urlRegex = /((?:https?:\/\/|www\.)[^\s)]+)/g
   const parts = text.split(urlRegex)
   return parts.map((part, index) => {
@@ -79,13 +80,18 @@ function splitBareUrls(text: string): ReactNode[] {
         </a>
       )
     }
-    return part
+    return withHighlight(part, highlightTerm)
   }).filter(Boolean) as ReactNode[]
 }
 
-function ReferenceLine({ line, index }: { line: string; index: number }) {
+function ReferenceLine({ line, index, searchTerm }: { line: string; index: number; searchTerm?: string }) {
   const parsed = splitMarker(line)
   const isLead = index === 0
+  const lowerLine = line.toLowerCase()
+  const hasMatch = !!searchTerm && lowerLine.includes(searchTerm.toLowerCase())
+  const matchClass = hasMatch ? 'search-match' : ''
+  const matchData = hasMatch ? { 'data-search-match': 'true' } : {}
+
   const isHeading =
     !parsed &&
     !isLead &&
@@ -96,8 +102,11 @@ function ReferenceLine({ line, index }: { line: string; index: number }) {
 
   if (isLead) {
     return (
-      <p className="m-0 border-l-2 border-[var(--accent)] bg-[rgba(236,226,196,0.05)] px-5 py-4 text-[18px] font-light leading-8 text-[#f3ead0]">
-        {renderLinkedText(line)}
+      <p
+        className={`m-0 border-l-2 border-[var(--accent)] bg-[rgba(236,226,196,0.05)] px-5 py-4 text-[18px] font-light leading-8 text-[#f3ead0] ${matchClass}`}
+        {...matchData}
+      >
+        {renderLinkedText(line, searchTerm)}
       </p>
     )
   }
@@ -111,11 +120,12 @@ function ReferenceLine({ line, index }: { line: string; index: number }) {
           major
             ? 'mt-4 border-[var(--accent)] bg-[rgba(236,226,196,0.045)]'
             : 'border-[rgba(236,226,196,0.09)]'
-        }`}
+        } ${matchClass}`}
         style={{
           gridTemplateColumns: '3.1rem minmax(0,1fr)',
           paddingLeft: `${depth * 14 + 14}px`,
         }}
+        {...matchData}
       >
         <span
           className={`pt-[0.15em] text-right font-light tabular-nums ${
@@ -131,7 +141,7 @@ function ReferenceLine({ line, index }: { line: string; index: number }) {
               : 'text-[15px] leading-7 text-[#d8ceb0]'
           }`}
         >
-          {renderLinkedText(parsed.text)}
+          {renderLinkedText(parsed.text, searchTerm)}
         </p>
       </div>
     )
@@ -143,17 +153,39 @@ function ReferenceLine({ line, index }: { line: string; index: number }) {
         isHeading
           ? 'mt-8 border-t border-[rgba(236,226,196,0.12)] pt-6 text-[15px] uppercase tracking-[0.22em] text-[var(--accent)]'
           : 'text-[15px] leading-7 text-[#cfc4a5]'
-      }`}
+      } ${matchClass}`}
+      {...matchData}
     >
-      {renderLinkedText(line)}
+      {renderLinkedText(line, searchTerm)}
     </p>
   )
 }
 
 export function ReferencePage({ page }: { page: ReferencePageContent }) {
+  const location = useLocation()
+  const navigate = useNavigate()
   const section = SECTIONS.find((item) => item.id === page.id)
   const accent = ACCENTS[page.id] ?? '#d4a24a'
   const style = { '--accent': accent } as CSSProperties
+
+  const searchParams = new URLSearchParams(location.searchStr || '')
+  const searchTerm = searchParams.get('q') || undefined
+
+  // Auto-scroll + highlight the first matching line when arriving from search
+  useEffect(() => {
+    if (!searchTerm) return
+    const timer = setTimeout(() => {
+      const first = document.querySelector('[data-search-match]')
+      if (first) {
+        first.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 110)
+    return () => clearTimeout(timer)
+  }, [searchTerm, page.id])
+
+  const clearSearch = () => {
+    navigate({ to: location.pathname, search: {} })
+  }
 
   return (
     <div
@@ -187,13 +219,27 @@ export function ReferencePage({ page }: { page: ReferencePageContent }) {
             <p className="mt-6 max-w-[680px] text-[clamp(16px,2vw,20px)] font-light leading-8 text-[#d8ceb0]">
               {page.subtitle}
             </p>
+
+            {/* Search context pill (when arrived via the Perforated Index) */}
+            {searchTerm && (
+              <div className="mt-3 flex items-center gap-3 text-[10px] uppercase tracking-[0.34em] text-[#d4a24a]">
+                SEARCHING “{searchTerm}”
+                <button
+                  type="button"
+                  onClick={clearSearch}
+                  className="border border-[rgba(212,162,74,0.4)] px-2 py-px text-[#b8ad8d] transition hover:border-[#d4a24a] hover:text-[#ece2c4]"
+                >
+                  CLEAR
+                </button>
+              </div>
+            )}
           </div>
         </section>
 
         <article className="mt-12 border-y border-[rgba(236,226,196,0.12)] py-8">
           <div className="mx-auto flex max-w-[860px] flex-col gap-1">
             {page.lines.map((line, index) => (
-              <ReferenceLine key={`${page.id}-${index}`} line={line} index={index} />
+              <ReferenceLine key={`${page.id}-${index}`} line={line} index={index} searchTerm={searchTerm} />
             ))}
           </div>
         </article>
