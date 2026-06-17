@@ -65,6 +65,10 @@ function SacredGeometry() {
   const cx = 500
   const cy = 500
 
+  function openSearch() {
+    window.dispatchEvent(new CustomEvent('org:open-search'))
+  }
+
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-[#0b0d12] text-[#ece2c4]">
       <div
@@ -268,6 +272,17 @@ function SacredGeometry() {
           })}
         </div>
       </main>
+
+      {/* Subtle blotter stamp trigger for search — home has no top nav */}
+      <button
+        type="button"
+        onClick={openSearch}
+        aria-label="Search the archive"
+        title="Search the ORG archive (⌘K)"
+        className="fixed right-3 top-3 z-[60] grid h-8 w-8 place-items-center border border-[rgba(236,226,196,0.4)] bg-[rgba(11,13,18,0.75)] text-[#d4a24a] backdrop-blur transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0] md:right-5 md:top-4"
+      >
+        <span aria-hidden className="text-[11px] font-bold tracking-[0.2em]">⌘</span>
+      </button>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Search } from 'lucide-react'
 import { GRID_ORDER } from '#/lib/sections'
 import aboutImg from '#/assets/about.png'
 import beliefsImg from '#/assets/beliefs.png'
@@ -106,10 +106,14 @@ export function SiteNav() {
     setOpen(false)
   }, [location.pathname])
 
+  function openSearch() {
+    window.dispatchEvent(new CustomEvent('org:open-search'))
+  }
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 bg-[rgba(11,13,18,0.78)] backdrop-blur-md">
-        <div className="mx-auto hidden max-w-[1180px] px-[clamp(14px,3vw,32px)] py-4 md:block">
+        <div className="mx-auto hidden max-w-[1180px] px-[clamp(14px,3vw,32px)] py-4 md:block relative">
           <nav aria-label="Primary" className="relative grid grid-cols-9 gap-0">
             {/* Grid-level larger perforation lines matching the home page blotter sheet: 6px thick, sparse dashes (d=25px, g=20px) at every tab division + outer frame. */}
             {(() => {
@@ -168,6 +172,17 @@ export function SiteNav() {
               />
             ))}
           </nav>
+
+          {/* Search trigger — mini perforated stamp, absolute so 9-col grid is untouched */}
+          <button
+            type="button"
+            onClick={openSearch}
+            aria-label="Search the archive"
+            title="Search the ORG archive (⌘K)"
+            className="absolute right-0 top-1/2 -translate-y-1/2 mr-1 grid h-7 w-7 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.6)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+          >
+            <Search size={14} />
+          </button>
         </div>
 
         <div className="flex h-16 items-center justify-between px-4 md:hidden">
@@ -178,6 +193,17 @@ export function SiteNav() {
           >
             ORG
           </Link>
+
+          {/* Mobile search stamp */}
+          <button
+            type="button"
+            onClick={openSearch}
+            aria-label="Search the archive"
+            className="mr-1.5 grid h-9 w-9 place-items-center border border-[rgba(236,226,196,0.28)] bg-[rgba(11,13,18,0.86)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+          >
+            <Search size={16} />
+          </button>
+
           <button
             type="button"
             aria-label={open ? 'Close navigation' : 'Open navigation'}

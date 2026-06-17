@@ -3,6 +3,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import appCss from '../styles.css?url'
+import { SearchOverlay } from '#/components/SearchOverlay'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -36,6 +37,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <SearchOverlay />
         <TanStackDevtools
           config={{
             position: 'bottom-right',
