@@ -30,3 +30,25 @@ body {
 @keyframes v2-rotate {
   to { transform: rotate(360deg); }
 }
+
+/* Search "Perforated Index" — minimal additions for blotter ink + match emphasis */
+mark {
+  background-color: #d4a24a;
+  color: #0b0d12;
+  padding: 0 2px;
+  border-radius: 1px;
+  font-weight: 500;
+}
+
+/* Stronger emphasis on matching lines/blocks when arriving via search (?q=) */
+.search-match {
+  background-color: rgba(212, 162, 74, 0.07) !important;
+  border-left-color: #d4a24a !important;
+}
+
+/* Subtle focus treatment for the archive search input */
+.search-input:focus {
+  border-color: #d4a24a;
+  outline: none;
+}
+
