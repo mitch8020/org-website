@@ -192,7 +192,7 @@ export const PAGE_META: Record<
   community: { short: 'COMMUNITY', accent: '#5800FF' },
   beliefs: { short: 'BELIEFS', accent: '#5800FF' },
   infrastructure: { short: 'INFRASTRUCTURE', accent: '#5800FF' },
-  research: { short: 'RESEARCH', accent: '##5800FF' },
+  research: { short: 'RESEARCH', accent: '#5800FF' },
   legal: { short: 'LEGAL', accent: '#5800FF' },
   future: { short: 'FUTURE IDEAS', accent: '#5800FF' },
   donations: { short: 'GIFTS & CONTRIBUTIONS', accent: '#5800FF' },
