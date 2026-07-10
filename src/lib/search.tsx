@@ -189,12 +189,12 @@ export const PAGE_META: Record<
   SearchPageId,
   { short: string; accent: string }
 > = {
-  community: { short: 'COMMUNITY', accent: '#78aea2' },
-  beliefs: { short: 'BELIEFS', accent: '#e2bd65' },
-  infrastructure: { short: 'INFRASTRUCTURE', accent: '#c98b63' },
-  research: { short: 'RESEARCH', accent: '#8da8dc' },
-  legal: { short: 'LEGAL', accent: '#d6d0c2' },
-  future: { short: 'FUTURE IDEAS', accent: '#c99bdd' },
-  donations: { short: 'GIFTS & CONTRIBUTIONS', accent: '#9dcf83' },
-  about: { short: 'ABOUT US', accent: '#d4a24a' },
+  community: { short: 'COMMUNITY', accent: '#5800FF' },
+  beliefs: { short: 'BELIEFS', accent: '#5800FF' },
+  infrastructure: { short: 'INFRASTRUCTURE', accent: '#5800FF' },
+  research: { short: 'RESEARCH', accent: '##5800FF' },
+  legal: { short: 'LEGAL', accent: '#5800FF' },
+  future: { short: 'FUTURE IDEAS', accent: '#5800FF' },
+  donations: { short: 'GIFTS & CONTRIBUTIONS', accent: '#5800FF' },
+  about: { short: 'ABOUT US', accent: '#5800FF' },
 }
