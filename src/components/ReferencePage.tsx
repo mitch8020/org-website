@@ -114,6 +114,7 @@ function ReferenceLine({ line, index, searchTerm }: { line: string; index: numbe
   if (parsed) {
     const depth = markerDepth(parsed.marker)
     const major = depth === 0
+    const isCMarker = parsed.marker === 'C.'
     return (
       <div
         className={`grid gap-3 border-l py-3 pr-3 ${
@@ -123,7 +124,7 @@ function ReferenceLine({ line, index, searchTerm }: { line: string; index: numbe
         } ${matchClass}`}
         style={{
           gridTemplateColumns: '3.1rem minmax(0,1fr)',
-          paddingLeft: `${depth * 14 + 14}px`,
+          paddingLeft: `${depth * 14 + 14 + (isCMarker ? 12 : 0)}px`,
         }}
         {...matchData}
       >
