@@ -214,9 +214,17 @@ export function SiteNav() {
             aria-label={open ? 'Close navigation' : 'Open navigation'}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
-            className="grid h-10 w-10 place-items-center border border-[rgba(236,226,196,0.28)] bg-[rgba(11,13,18,0.86)] text-[#ece2c4]"
+            className="grid h-10 w-10 place-items-center bg-[rgba(11,13,18,0.86)] text-[#ece2c4]"
           >
-            {open ? <X size={18} /> : <Menu size={18} />}
+            {open ? (
+              <X size={18} />
+            ) : (
+              <span
+                aria-hidden
+                className="h-full w-full bg-cover bg-center animate-[v2-rotate_28s_linear_infinite]"
+                style={{ backgroundImage: `url(${homeRainbowImg})` }}
+              />
+            )}
           </button>
         </div>
       </header>
