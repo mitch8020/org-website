@@ -33,7 +33,7 @@ export const REFERENCE_PAGES = [
       "a) Have never tried DMT (or other entheogens) to benefit from being able to see how it can be used responsibly and spiritually.",
       "(1) This will grow the general entheogenic community.",
       "b) Don't wish to use entheogens once per month, but still want to participate in a regular meditation and the spiritual discussions that follow the use of entheogens.",
-      "C. [Join our group chat to vote on a week, day, and time](https://t.me/+ccL8NUffhuU0ZGJh)",
+      "C. Join our Telegram group chat [here](https://t.me/+ccL8NUffhuU0ZGJh) for more information and updates.",
       "II. Sober Spirituality Ceremony",
       "A. 1 Hour Zoom where we discuss spirituality and ways to improve [ORG](https://org-spirituality.netlify.app)",
       "B. Starting once per month",
