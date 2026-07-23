@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
-import { Menu, X, Search, UserPlus } from 'lucide-react'
+import { X, Search, UserPlus } from 'lucide-react'
 import { GRID_ORDER } from '#/lib/sections'
 import aboutImg from '#/assets/about.png'
 import beliefsImg from '#/assets/beliefs.png'

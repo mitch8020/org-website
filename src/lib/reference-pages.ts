@@ -713,10 +713,3 @@ export const REFERENCE_PAGES = [
     ],
   },
 ] as const satisfies ReadonlyArray<ReferencePageContent>
-
-export const REFERENCE_PAGE_BY_ID: Record<
-  ReferencePageId,
-  ReferencePageContent
-> = Object.fromEntries(
-  REFERENCE_PAGES.map((page) => [page.id, page]),
-) as Record<ReferencePageId, ReferencePageContent>

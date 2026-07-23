@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
-import { Link, useLocation, useNavigate } from '@tanstack/react-router'
+import { useLocation, useNavigate } from '@tanstack/react-router'
 import { SiteNav } from '#/components/SiteNav'
 import type { ReferenceBlock, ReferencePageContent } from '#/lib/content-types'
-import { SECTIONS } from '#/lib/sections'
 import { withHighlight } from '#/lib/search'
 
 const ACCENTS: Record<string, string> = {
@@ -153,7 +152,6 @@ function ReferenceLine({
 export function ReferencePage({ page }: { page: ReferencePageContent }) {
   const location = useLocation()
   const navigate = useNavigate()
-  const section = SECTIONS.find((item) => item.id === page.id)
   const accent = ACCENTS[page.id] ?? '#d4a24a'
   const style = { '--accent': accent } as CSSProperties
 
