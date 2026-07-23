@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { X } from 'lucide-react'
-import { search, withHighlight, PAGE_META, type SearchResult } from '#/lib/search'
+import { search, withHighlight, PAGE_META } from '#/lib/search'
+import type { SearchResult } from '#/lib/search'
 
 const NOISE_URL =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='7'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.65'/></svg>\")"
@@ -69,8 +70,8 @@ export function SearchOverlay() {
       // focus input after paint
       setTimeout(() => inputRef.current?.focus(), 60)
     }
-    window.addEventListener('org:open-search', handleOpen as EventListener)
-    return () => window.removeEventListener('org:open-search', handleOpen as EventListener)
+    window.addEventListener('org:open-search', handleOpen)
+    return () => window.removeEventListener('org:open-search', handleOpen)
   }, [])
 
   function toggle() {
@@ -90,7 +91,7 @@ export function SearchOverlay() {
   }
 
   function activate(idx: number) {
-    const r = results[idx]
+    const r = results.at(idx)
     if (!r) return
     const q = query.trim()
     close()

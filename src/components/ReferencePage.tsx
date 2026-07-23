@@ -1,4 +1,5 @@
-import { useEffect, type CSSProperties, type ReactNode } from 'react'
+import { useEffect } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { SiteNav } from '#/components/SiteNav'
 import type { ReferencePageContent } from '#/lib/reference-pages'
@@ -41,7 +42,7 @@ function renderLinkedText(text: string, highlightTerm?: string): ReactNode {
       nodes.push(...splitBareUrls(text.slice(lastIndex, match.index), highlightTerm))
     }
     const display = match[1]
-    let href = match[2]
+    const href = match[2]
     nodes.push(
       <a
         key={`md-${match.index}`}

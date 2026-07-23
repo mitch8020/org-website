@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResearchRouteImport } from './routes/research'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as OfferingsRouteImport } from './routes/offerings'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as InfrastructureRouteImport } from './routes/infrastructure'
@@ -19,15 +21,28 @@ import { Route as CommunityRouteImport } from './routes/community'
 import { Route as BeliefsRouteImport } from './routes/beliefs'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OrdersOrderIdRouteImport } from './routes/orders/$orderId'
+import { Route as OfferingsCheckoutRouteImport } from './routes/offerings.checkout'
 import { Route as Archive5RouteImport } from './routes/archive/5'
 import { Route as Archive4RouteImport } from './routes/archive/4'
 import { Route as Archive3RouteImport } from './routes/archive/3'
 import { Route as Archive2RouteImport } from './routes/archive/2'
 import { Route as Archive1RouteImport } from './routes/archive/1'
+import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
 
 const ResearchRoute = ResearchRouteImport.update({
   id: '/research',
   path: '/research',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfferingsRoute = OfferingsRouteImport.update({
+  id: '/offerings',
+  path: '/offerings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalRoute = LegalRouteImport.update({
@@ -75,6 +90,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrdersOrderIdRoute = OrdersOrderIdRouteImport.update({
+  id: '/orders/$orderId',
+  path: '/orders/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfferingsCheckoutRoute = OfferingsCheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => OfferingsRoute,
+} as any)
 const Archive5Route = Archive5RouteImport.update({
   id: '/archive/5',
   path: '/archive/5',
@@ -100,6 +125,11 @@ const Archive1Route = Archive1RouteImport.update({
   path: '/archive/1',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminOrdersRoute = AdminOrdersRouteImport.update({
+  id: '/admin/orders',
+  path: '/admin/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -111,12 +141,17 @@ export interface FileRoutesByFullPath {
   '/infrastructure': typeof InfrastructureRoute
   '/join': typeof JoinRoute
   '/legal': typeof LegalRoute
+  '/offerings': typeof OfferingsRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/research': typeof ResearchRoute
+  '/admin/orders': typeof AdminOrdersRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
   '/archive/4': typeof Archive4Route
   '/archive/5': typeof Archive5Route
+  '/offerings/checkout': typeof OfferingsCheckoutRoute
+  '/orders/$orderId': typeof OrdersOrderIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -128,12 +163,17 @@ export interface FileRoutesByTo {
   '/infrastructure': typeof InfrastructureRoute
   '/join': typeof JoinRoute
   '/legal': typeof LegalRoute
+  '/offerings': typeof OfferingsRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/research': typeof ResearchRoute
+  '/admin/orders': typeof AdminOrdersRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
   '/archive/4': typeof Archive4Route
   '/archive/5': typeof Archive5Route
+  '/offerings/checkout': typeof OfferingsCheckoutRoute
+  '/orders/$orderId': typeof OrdersOrderIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -146,12 +186,17 @@ export interface FileRoutesById {
   '/infrastructure': typeof InfrastructureRoute
   '/join': typeof JoinRoute
   '/legal': typeof LegalRoute
+  '/offerings': typeof OfferingsRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/research': typeof ResearchRoute
+  '/admin/orders': typeof AdminOrdersRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
   '/archive/4': typeof Archive4Route
   '/archive/5': typeof Archive5Route
+  '/offerings/checkout': typeof OfferingsCheckoutRoute
+  '/orders/$orderId': typeof OrdersOrderIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -165,12 +210,17 @@ export interface FileRouteTypes {
     | '/infrastructure'
     | '/join'
     | '/legal'
+    | '/offerings'
+    | '/profile'
     | '/research'
+    | '/admin/orders'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
     | '/archive/4'
     | '/archive/5'
+    | '/offerings/checkout'
+    | '/orders/$orderId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -182,12 +232,17 @@ export interface FileRouteTypes {
     | '/infrastructure'
     | '/join'
     | '/legal'
+    | '/offerings'
+    | '/profile'
     | '/research'
+    | '/admin/orders'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
     | '/archive/4'
     | '/archive/5'
+    | '/offerings/checkout'
+    | '/orders/$orderId'
   id:
     | '__root__'
     | '/'
@@ -199,12 +254,17 @@ export interface FileRouteTypes {
     | '/infrastructure'
     | '/join'
     | '/legal'
+    | '/offerings'
+    | '/profile'
     | '/research'
+    | '/admin/orders'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
     | '/archive/4'
     | '/archive/5'
+    | '/offerings/checkout'
+    | '/orders/$orderId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -217,12 +277,16 @@ export interface RootRouteChildren {
   InfrastructureRoute: typeof InfrastructureRoute
   JoinRoute: typeof JoinRoute
   LegalRoute: typeof LegalRoute
+  OfferingsRoute: typeof OfferingsRouteWithChildren
+  ProfileRoute: typeof ProfileRoute
   ResearchRoute: typeof ResearchRoute
+  AdminOrdersRoute: typeof AdminOrdersRoute
   Archive1Route: typeof Archive1Route
   Archive2Route: typeof Archive2Route
   Archive3Route: typeof Archive3Route
   Archive4Route: typeof Archive4Route
   Archive5Route: typeof Archive5Route
+  OrdersOrderIdRoute: typeof OrdersOrderIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +296,20 @@ declare module '@tanstack/react-router' {
       path: '/research'
       fullPath: '/research'
       preLoaderRoute: typeof ResearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/offerings': {
+      id: '/offerings'
+      path: '/offerings'
+      fullPath: '/offerings'
+      preLoaderRoute: typeof OfferingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal': {
@@ -297,6 +375,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/orders/$orderId': {
+      id: '/orders/$orderId'
+      path: '/orders/$orderId'
+      fullPath: '/orders/$orderId'
+      preLoaderRoute: typeof OrdersOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/offerings/checkout': {
+      id: '/offerings/checkout'
+      path: '/checkout'
+      fullPath: '/offerings/checkout'
+      preLoaderRoute: typeof OfferingsCheckoutRouteImport
+      parentRoute: typeof OfferingsRoute
+    }
     '/archive/5': {
       id: '/archive/5'
       path: '/archive/5'
@@ -332,8 +424,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Archive1RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/orders': {
+      id: '/admin/orders'
+      path: '/admin/orders'
+      fullPath: '/admin/orders'
+      preLoaderRoute: typeof AdminOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
+
+interface OfferingsRouteChildren {
+  OfferingsCheckoutRoute: typeof OfferingsCheckoutRoute
+}
+
+const OfferingsRouteChildren: OfferingsRouteChildren = {
+  OfferingsCheckoutRoute: OfferingsCheckoutRoute,
+}
+
+const OfferingsRouteWithChildren = OfferingsRoute._addFileChildren(
+  OfferingsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -345,12 +456,16 @@ const rootRouteChildren: RootRouteChildren = {
   InfrastructureRoute: InfrastructureRoute,
   JoinRoute: JoinRoute,
   LegalRoute: LegalRoute,
+  OfferingsRoute: OfferingsRouteWithChildren,
+  ProfileRoute: ProfileRoute,
   ResearchRoute: ResearchRoute,
+  AdminOrdersRoute: AdminOrdersRoute,
   Archive1Route: Archive1Route,
   Archive2Route: Archive2Route,
   Archive3Route: Archive3Route,
   Archive4Route: Archive4Route,
   Archive5Route: Archive5Route,
+  OrdersOrderIdRoute: OrdersOrderIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

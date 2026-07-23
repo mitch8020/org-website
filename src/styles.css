@@ -2,6 +2,8 @@
 
 :root {
   --font-helvetica: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
 }
 
 * {
@@ -19,6 +21,35 @@ body {
   font-family: var(--font-helvetica);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: #9dcf83;
+  color: #0b0d12;
+}
+
+:focus-visible {
+  outline: 2px solid #9dcf83;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @keyframes v2-draw {

@@ -50,81 +50,86 @@ function NavSquare({
   const img = isHome ? homeRainbowImg : (IMAGES[item.id] ?? null)
 
   return (
-    <Link
-      to={item.href}
-      onClick={onNavigate}
-      title={item.label}
-      aria-label={item.label}
-      className={`group no-underline transition-all duration-300 w-full`}
-    >
-      <div
-        className={`relative overflow-hidden w-full aspect-square transition-all duration-300 ${
-          active
-            ? 'border-solid border-[#ece2c4] bg-[#ece2c4]'
-            : 'bg-[rgba(11,13,18,0.74)] hover:border-solid hover:border-[#d4a24a] hover:bg-[rgba(212,162,74,0.12)]'
-        }`}
+    <div className="relative w-full">
+      <Link
+        to={item.href}
+        onClick={onNavigate}
+        title={item.label}
+        aria-label={item.label}
+        className="group block w-full no-underline transition-all duration-300"
       >
-        {img ? (
+        <div
+          className={`relative aspect-square w-full overflow-hidden transition-all duration-300 ${
+            active
+              ? 'border-solid border-[#ece2c4] bg-[#ece2c4]'
+              : 'bg-[rgba(11,13,18,0.74)] hover:border-solid hover:border-[#d4a24a] hover:bg-[rgba(212,162,74,0.12)]'
+          }`}
+        >
+          {img ? (
+            <span
+              aria-hidden
+              className={`absolute inset-0 bg-cover bg-center ${isHome ? 'animate-[v2-rotate_28s_linear_infinite]' : ''} transition-opacity duration-300 ${active ? 'opacity-20' : 'opacity-20 group-hover:opacity-40'}`}
+              style={{ backgroundImage: `url(${img})` }}
+            />
+          ) : null}
           <span
             aria-hidden
-            className={`absolute inset-0 bg-cover bg-center ${isHome ? 'animate-[v2-rotate_28s_linear_infinite]' : ''} transition-opacity duration-300 ${active ? 'opacity-20' : 'opacity-20 group-hover:opacity-40'}`}
-            style={{ backgroundImage: `url(${img})` }}
+            className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
+              active ? 'opacity-0' : ''
+            }`}
+            style={{
+              background:
+                'linear-gradient(135deg, rgba(212,162,74,0.22), transparent 38%, rgba(120,174,162,0.12))',
+            }}
           />
-        ) : null}
-        <span
-          aria-hidden
-          className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
-            active ? 'opacity-0' : ''
-          }`}
-          style={{
-            background:
-              'linear-gradient(135deg, rgba(212,162,74,0.22), transparent 38%, rgba(120,174,162,0.12))',
-          }}
-        />
 
-        {isHome && (
-          <>
-            {/* Join button - upper left of ORG tab, matching stamp style */}
-            <Link
-              to="/join"
-              onClick={(e) => e.stopPropagation()}
-              aria-label="Join the ORG or access member portal"
-              title="Join or sign in as a member"
-              className="absolute top-1 left-1 z-20 grid h-4 w-4 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.7)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
-            >
-              <UserPlus size={10} />
-            </Link>
+          <span
+            className={`pointer-events-none absolute right-0 bottom-0 left-0 z-10 pb-1.5 text-center leading-none tracking-[0.04em] uppercase ${
+              compact
+                ? 'text-[12px] font-semibold'
+                : 'text-[clamp(9px,1vw,13px)] font-bold'
+            } ${active ? 'text-[#d4a24a]' : 'text-[#ece2c4] group-hover:text-[#f0e6d0]'}`}
+            style={
+              !active
+                ? {
+                    background:
+                      'linear-gradient(to top, rgba(11,13,18,0.65) 0%, rgba(11,13,18,0.3) 55%, transparent 100%)',
+                  }
+                : undefined
+            }
+          >
+            {LABELS[item.id] ?? item.label}
+          </span>
+        </div>
+      </Link>
 
-            {/* Search button - upper right of ORG tab, matching stamp style */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.dispatchEvent(new CustomEvent('org:open-search'));
-              }}
-              aria-label="Search the archive"
-              title="Search the ORG archive (⌘K)"
-              className="absolute top-1 right-1 z-20 grid h-4 w-4 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.7)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
-            >
-              <Search size={10} />
-            </button>
-          </>
-        )}
+      {isHome ? (
+        <>
+          <Link
+            to="/join"
+            onClick={onNavigate}
+            aria-label="Join the ORG or access member portal"
+            title="Join or sign in as a member"
+            className="absolute top-1 left-1 z-20 grid h-4 w-4 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.7)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+          >
+            <UserPlus size={10} />
+          </Link>
 
-        <span
-          className={`absolute bottom-0 left-0 right-0 z-10 text-center leading-none tracking-[0.04em] uppercase pb-1.5 pointer-events-none ${
-            compact
-              ? 'text-[12px] font-semibold'
-              : 'text-[clamp(9px,1vw,13px)] font-bold'
-          } ${active ? 'text-[#d4a24a]' : 'text-[#ece2c4] group-hover:text-[#f0e6d0]'}`}
-          style={!active ? {
-            background: 'linear-gradient(to top, rgba(11,13,18,0.65) 0%, rgba(11,13,18,0.3) 55%, transparent 100%)'
-          } : undefined}
-        >
-          {LABELS[item.id] ?? item.label}
-        </span>
-      </div>
-    </Link>
+          <button
+            type="button"
+            onClick={() => {
+              onNavigate?.()
+              window.dispatchEvent(new CustomEvent('org:open-search'))
+            }}
+            aria-label="Search the archive"
+            title="Search the ORG archive (⌘K)"
+            className="absolute top-1 right-1 z-20 grid h-4 w-4 place-items-center border border-[rgba(236,226,196,0.35)] bg-[rgba(11,13,18,0.7)] text-[#d4a24a] transition-colors hover:border-[#d4a24a] hover:text-[#f0e6d0]"
+          >
+            <Search size={10} />
+          </button>
+        </>
+      ) : null}
+    </div>
   )
 }
 
@@ -193,7 +198,8 @@ export function SiteNav() {
                 active={
                   item.href === '/'
                     ? location.pathname === '/'
-                    : location.pathname === item.href
+                    : location.pathname === item.href ||
+                      location.pathname.startsWith(`${item.href}/`)
                 }
               />
             ))}
@@ -283,7 +289,8 @@ export function SiteNav() {
                 active={
                   item.href === '/'
                     ? location.pathname === '/'
-                    : location.pathname === item.href
+                    : location.pathname === item.href ||
+                      location.pathname.startsWith(`${item.href}/`)
                 }
                 compact
                 onNavigate={() => setOpen(false)}

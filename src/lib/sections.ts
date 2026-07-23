@@ -83,7 +83,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   {
     id: 'donations',
     label: 'Offerings',
-    href: '/gifts-contributions',
+    href: '/offerings',
     roman: 'VIII',
     numeral: '08',
     tagline: 'Offerings, patronage, tithes',
