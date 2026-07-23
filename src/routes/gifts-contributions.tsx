@@ -7,7 +7,7 @@ const page = REFERENCE_PAGE_BY_ID.donations
 export const Route = createFileRoute('/gifts-contributions')({
   head: () => ({
     meta: [
-      { title: 'Gifts & Contributions - ORG' },
+      { title: 'Offerings - ORG' },
       { name: 'description', content: page.subtitle },
     ],
   }),

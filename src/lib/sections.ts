@@ -82,7 +82,7 @@ export const SECTIONS: ReadonlyArray<Section> = [
   },
   {
     id: 'donations',
-    label: 'Gifts & Contributions',
+    label: 'Offerings',
     href: '/gifts-contributions',
     roman: 'VIII',
     numeral: '08',
