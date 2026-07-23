@@ -15,7 +15,7 @@ import { MemberGate } from '#/components/shop/MemberGate'
 import { ShopShell } from '#/components/shop/ShopShell'
 import { WebsiteContentForm } from '#/components/admin/WebsiteContentForm'
 import { ReferencePage } from '#/components/ReferencePage'
-import { AboutDocument } from '#/routes/about'
+import { AboutDocument } from '#/components/about/AboutDocument'
 import { useWebsiteWorkbench } from '#/components/admin/website-workbench/useWebsiteWorkbench'
 import type { WebsitePageId } from '#/lib/content-types'
 
