@@ -1,19 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ReferencePage } from '#/components/ReferencePage'
-import { REFERENCE_PAGE_BY_ID } from '#/lib/reference-pages'
-
-const page = REFERENCE_PAGE_BY_ID.beliefs
+import { loadPublishedPage } from '#/lib/content-api'
 
 export const Route = createFileRoute('/beliefs')({
-  head: () => ({
+  loader: () => loadPublishedPage('beliefs'),
+  head: ({ loaderData }) => ({
     meta: [
-      { title: 'Beliefs - ORG' },
-      { name: 'description', content: page.subtitle },
+      { title: `${loaderData?.content.title ?? 'Beliefs'} - ORG` },
+      { name: 'description', content: loaderData?.content.subtitle },
     ],
   }),
   component: BeliefsRoute,
 })
 
 function BeliefsRoute() {
-  return <ReferencePage page={page} />
+  return <ReferencePage page={Route.useLoaderData().content} />
 }

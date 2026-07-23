@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { SiteNav } from '#/components/SiteNav'
-import type { ReferencePageContent } from '#/lib/reference-pages'
+import type { ReferenceBlock, ReferencePageContent } from '#/lib/content-types'
 import { SECTIONS } from '#/lib/sections'
 import { withHighlight } from '#/lib/search'
 
@@ -16,21 +16,6 @@ const ACCENTS: Record<string, string> = {
   donations: '#9dcf83',
 }
 
-function markerDepth(marker: string) {
-  if (/^[IVXLCDM]+\.$/.test(marker)) return 0
-  if (/^[A-Z]\.$/.test(marker)) return 1
-  if (/^\d+\.$/.test(marker)) return 2
-  if (/^[a-z]\)$/.test(marker)) return 3
-  return 4
-}
-
-function splitMarker(line: string) {
-  const match = line.match(
-    /^((?:[IVXLCDM]+\.|[A-Z]\.|\d+\.|[a-z]\)|\(\d+\)|\([a-z]\)))\s+(.*)$/,
-  )
-  return match ? { marker: match[1], text: match[2] } : null
-}
-
 function renderLinkedText(text: string, highlightTerm?: string): ReactNode {
   // Support markdown-style links [display text](https://url) for bold/underlined phrases from source docs
   const mdLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g
@@ -39,7 +24,9 @@ function renderLinkedText(text: string, highlightTerm?: string): ReactNode {
   let match: RegExpExecArray | null
   while ((match = mdLinkRegex.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      nodes.push(...splitBareUrls(text.slice(lastIndex, match.index), highlightTerm))
+      nodes.push(
+        ...splitBareUrls(text.slice(lastIndex, match.index), highlightTerm),
+      )
     }
     const display = match[1]
     const href = match[2]
@@ -52,7 +39,7 @@ function renderLinkedText(text: string, highlightTerm?: string): ReactNode {
         className="text-[#f1d78a] underline decoration-[rgba(241,215,138,0.35)] underline-offset-4 transition-colors hover:text-white"
       >
         {withHighlight(display, highlightTerm)}
-      </a>
+      </a>,
     )
     lastIndex = mdLinkRegex.lastIndex
   }
@@ -65,57 +52,55 @@ function renderLinkedText(text: string, highlightTerm?: string): ReactNode {
 function splitBareUrls(text: string, highlightTerm?: string): ReactNode[] {
   const urlRegex = /((?:https?:\/\/|www\.)[^\s)]+)/g
   const parts = text.split(urlRegex)
-  return parts.map((part, index) => {
-    if (!part) return null
-    if (/^(?:https?:\/\/|www\.)/.test(part)) {
-      const href = part.startsWith('www.') ? `https://${part}` : part
-      return (
-        <a
-          key={`url-${index}`}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#f1d78a] underline decoration-[rgba(241,215,138,0.35)] underline-offset-4 transition-colors hover:text-white"
-        >
-          {part}
-        </a>
-      )
-    }
-    return withHighlight(part, highlightTerm)
-  }).filter(Boolean) as ReactNode[]
+  return parts
+    .map((part, index) => {
+      if (!part) return null
+      if (/^(?:https?:\/\/|www\.)/.test(part)) {
+        const href = part.startsWith('www.') ? `https://${part}` : part
+        return (
+          <a
+            key={`url-${index}`}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#f1d78a] underline decoration-[rgba(241,215,138,0.35)] underline-offset-4 transition-colors hover:text-white"
+          >
+            {part}
+          </a>
+        )
+      }
+      return withHighlight(part, highlightTerm)
+    })
+    .filter(Boolean) as ReactNode[]
 }
 
-function ReferenceLine({ line, index, searchTerm }: { line: string; index: number; searchTerm?: string }) {
-  const parsed = splitMarker(line)
-  const isLead = index === 0
-  const lowerLine = line.toLowerCase()
+function ReferenceLine({
+  block,
+  searchTerm,
+}: {
+  block: ReferenceBlock
+  searchTerm?: string
+}) {
+  const lowerLine = block.text.toLowerCase()
   const hasMatch = !!searchTerm && lowerLine.includes(searchTerm.toLowerCase())
   const matchClass = hasMatch ? 'search-match' : ''
   const matchData = hasMatch ? { 'data-search-match': 'true' } : {}
 
-  const isHeading =
-    !parsed &&
-    !isLead &&
-    (line.endsWith(':') ||
-      /^(Members|How To Join|Member-only|Churches\/|Other Resources|Anonymous Beliefs|Southwest Virginia|Colorado|Austin Texas|Miami Florida|Asia|Los Angeles|San Francisco|New York|Miscellaneous|Sketches)/.test(
-        line,
-      ))
-
-  if (isLead) {
+  if (block.kind === 'lead') {
     return (
       <p
         className={`m-0 border-l-2 border-[var(--accent)] bg-[rgba(236,226,196,0.05)] px-5 py-4 text-[18px] font-light leading-8 text-[#f3ead0] ${matchClass}`}
         {...matchData}
       >
-        {renderLinkedText(line, searchTerm)}
+        {renderLinkedText(block.text, searchTerm)}
       </p>
     )
   }
 
-  if (parsed) {
-    const depth = markerDepth(parsed.marker)
+  if (block.kind === 'outline') {
+    const depth = block.depth ?? 0
     const major = depth === 0
-    const isCMarker = parsed.marker === 'C.'
+    const isCMarker = block.marker === 'C.'
     return (
       <div
         className={`grid gap-3 border-l py-3 pr-3 ${
@@ -131,10 +116,12 @@ function ReferenceLine({ line, index, searchTerm }: { line: string; index: numbe
       >
         <span
           className={`pt-[0.15em] text-right font-light tabular-nums ${
-            major ? 'text-[16px] text-[var(--accent)]' : 'text-[12px] text-[#a99f7c]'
+            major
+              ? 'text-[16px] text-[var(--accent)]'
+              : 'text-[12px] text-[#a99f7c]'
           }`}
         >
-          {parsed.marker}
+          {block.marker}
         </span>
         <p
           className={`m-0 min-w-0 break-words ${
@@ -143,7 +130,7 @@ function ReferenceLine({ line, index, searchTerm }: { line: string; index: numbe
               : 'text-[15px] leading-7 text-[#d8ceb0]'
           }`}
         >
-          {renderLinkedText(parsed.text, searchTerm)}
+          {renderLinkedText(block.text, searchTerm)}
         </p>
       </div>
     )
@@ -152,13 +139,13 @@ function ReferenceLine({ line, index, searchTerm }: { line: string; index: numbe
   return (
     <p
       className={`m-0 break-words ${
-        isHeading
+        block.kind === 'heading'
           ? 'mt-8 border-t border-[rgba(236,226,196,0.12)] pt-6 text-[15px] uppercase tracking-[0.22em] text-[var(--accent)]'
           : 'text-[15px] leading-7 text-[#cfc4a5]'
       } ${matchClass}`}
       {...matchData}
     >
-      {renderLinkedText(line, searchTerm)}
+      {renderLinkedText(block.text, searchTerm)}
     </p>
   )
 }
@@ -240,8 +227,12 @@ export function ReferencePage({ page }: { page: ReferencePageContent }) {
 
         <article className="mt-12 border-y border-[rgba(236,226,196,0.12)] py-8">
           <div className="mx-auto flex max-w-[860px] flex-col gap-1">
-            {page.lines.map((line, index) => (
-              <ReferenceLine key={`${page.id}-${index}`} line={line} index={index} searchTerm={searchTerm} />
+            {page.blocks.map((block) => (
+              <ReferenceLine
+                key={block.id}
+                block={block}
+                searchTerm={searchTerm}
+              />
             ))}
           </div>
         </article>

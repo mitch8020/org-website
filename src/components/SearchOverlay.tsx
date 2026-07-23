@@ -3,6 +3,9 @@ import { useNavigate } from '@tanstack/react-router'
 import { X } from 'lucide-react'
 import { search, withHighlight, PAGE_META } from '#/lib/search'
 import type { SearchResult } from '#/lib/search'
+import { DEFAULT_WEBSITE_PAGES } from '#/lib/content-defaults'
+import { loadPublishedPages } from '#/lib/content-api'
+import type { WebsitePageContent } from '#/lib/content-types'
 
 const NOISE_URL =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='7'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.65'/></svg>\")"
@@ -20,10 +23,18 @@ export function SearchOverlay() {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(0)
+  const [pages, setPages] = useState<WebsitePageContent[]>(
+    Object.values(DEFAULT_WEBSITE_PAGES),
+  )
   const inputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
 
-  const results = useMemo(() => search(query), [query])
+  const results = useMemo(() => search(query, pages), [query, pages])
+
+  async function refreshContent() {
+    const published = await loadPublishedPages()
+    setPages(published.map((page) => page.content))
+  }
 
   useEffect(() => {
     setSelected(0)
@@ -67,11 +78,16 @@ export function SearchOverlay() {
     function handleOpen() {
       setOpen(true)
       setQuery('')
+      void refreshContent()
       // focus input after paint
       setTimeout(() => inputRef.current?.focus(), 60)
     }
     window.addEventListener('org:open-search', handleOpen)
-    return () => window.removeEventListener('org:open-search', handleOpen)
+    window.addEventListener('org:content-published', refreshContent)
+    return () => {
+      window.removeEventListener('org:open-search', handleOpen)
+      window.removeEventListener('org:content-published', refreshContent)
+    }
   }, [])
 
   function toggle() {
@@ -79,6 +95,7 @@ export function SearchOverlay() {
     setOpen(next)
     if (next) {
       setQuery('')
+      void refreshContent()
       setTimeout(() => inputRef.current?.focus(), 60)
     } else {
       setQuery('')
@@ -183,8 +200,12 @@ export function SearchOverlay() {
         {/* Header / ritual title */}
         <div className="relative z-30 flex items-center justify-between border-b border-[rgba(236,226,196,0.12)] px-5 pb-3 pt-4">
           <div>
-            <div className="text-[10px] uppercase tracking-[0.38em] text-[#b8ad8d]">THE ORG ARCHIVE</div>
-            <div className="text-[clamp(15px,3.2vw,19px)] font-thin uppercase tracking-[0.14em] text-[#f3ead0]">The Perforated Index</div>
+            <div className="text-[10px] uppercase tracking-[0.38em] text-[#b8ad8d]">
+              THE ORG ARCHIVE
+            </div>
+            <div className="text-[clamp(15px,3.2vw,19px)] font-thin uppercase tracking-[0.14em] text-[#f3ead0]">
+              The Perforated Index
+            </div>
           </div>
           <button
             type="button"
@@ -215,7 +236,9 @@ export function SearchOverlay() {
         <div className="relative z-30 max-h-[58vh] overflow-auto px-2 pb-3 pt-1 text-sm">
           {!showResults && (
             <div className="px-3 py-2">
-              <div className="mb-2 text-[10px] uppercase tracking-[0.32em] text-[#9f9676]">SUGGESTED FRAGMENTS</div>
+              <div className="mb-2 text-[10px] uppercase tracking-[0.32em] text-[#9f9676]">
+                SUGGESTED FRAGMENTS
+              </div>
               <div className="flex flex-wrap gap-2">
                 {SUGGESTIONS.map((s, i) => (
                   <button
@@ -229,24 +252,37 @@ export function SearchOverlay() {
                 ))}
               </div>
               <div className="mt-4 text-[10px] text-[#9f9676]">
-                Or type anything — beliefs, events, names, sacraments. Results are extracts from the living archive.
+                Or type anything — beliefs, events, names, sacraments. Results
+                are extracts from the living archive.
               </div>
             </div>
           )}
 
           {showResults && currentResults.length === 0 && (
             <div className="px-3 py-6 text-center text-[#b8ad8d]">
-              No matches in the records.<br />
-              <span className="text-[12px] tracking-[0.1em]">The Universal Creator works in mysterious ways.</span>
+              No matches in the records.
+              <br />
+              <span className="text-[12px] tracking-[0.1em]">
+                The Universal Creator works in mysterious ways.
+              </span>
             </div>
           )}
 
           {currentResults.length > 0 && (
             <>
               <div className="px-3 pb-1.5 text-[10px] uppercase tracking-[0.32em] text-[#9f9676]">
-                {currentResults.length} FRAGMENT{currentResults.length === 1 ? '' : 'S'} — <span className="normal-case tracking-normal">tap or ↵ to open with highlight</span>
+                {currentResults.length} FRAGMENT
+                {currentResults.length === 1 ? '' : 'S'} —{' '}
+                <span className="normal-case tracking-normal">
+                  tap or ↵ to open with highlight
+                </span>
               </div>
-              <div role="listbox" aria-activedescendant={currentResults[selected] ? `result-${selected}` : undefined}>
+              <div
+                role="listbox"
+                aria-activedescendant={
+                  currentResults[selected] ? `result-${selected}` : undefined
+                }
+              >
                 {currentResults.map((r, i) => {
                   const meta = PAGE_META[r.pageId]
                   const isActive = i === selected
@@ -282,7 +318,9 @@ export function SearchOverlay() {
                           {meta.short}
                         </span>
                         {r.lineIndex !== undefined && (
-                          <span className="text-[10px] text-[#9f9676] tabular-nums">LINE {r.lineIndex + 1}</span>
+                          <span className="text-[10px] text-[#9f9676] tabular-nums">
+                            LINE {r.lineIndex + 1}
+                          </span>
                         )}
                       </div>
 
@@ -305,7 +343,8 @@ export function SearchOverlay() {
 
         {/* Footer ritual hints */}
         <div className="relative z-30 border-t border-[rgba(236,226,196,0.12)] px-5 py-2 text-[10px] uppercase tracking-[0.32em] text-[#9f9676]">
-          ⌘K / CTRL+K &nbsp;·&nbsp; ↑↓ &nbsp;·&nbsp; ↵ OPEN &nbsp;·&nbsp; ESC CLOSE
+          ⌘K / CTRL+K &nbsp;·&nbsp; ↑↓ &nbsp;·&nbsp; ↵ OPEN &nbsp;·&nbsp; ESC
+          CLOSE
         </div>
       </div>
     </div>

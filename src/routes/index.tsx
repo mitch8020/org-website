@@ -182,7 +182,7 @@ function SacredGeometry() {
             const isCenter = entry.id === 'home'
             const order = [0, 1, 2, 5, 8, 7, 6, 3].indexOf(i)
             const delay = isCenter
-              ? 2200
+              ? 2500
               : 1600 + (order >= 0 ? order : 0) * 110
 
             if (isCenter) {

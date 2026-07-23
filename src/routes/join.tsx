@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowRight, LogIn, ShieldCheck, UserPlus } from 'lucide-react'
+import { createFileRoute, Navigate } from '@tanstack/react-router'
+import { LogIn, UserPlus } from 'lucide-react'
 import { useOrgAuth } from '#/lib/auth'
 import { ShopShell } from '#/components/shop/ShopShell'
 import { AuthNotice } from '#/components/shop/AuthNotice'
@@ -20,6 +20,10 @@ export const Route = createFileRoute('/join')({
 
 function JoinPage() {
   const auth = useOrgAuth()
+
+  if (auth.isAuthenticated) {
+    return <Navigate to="/profile" replace />
+  }
 
   return (
     <ShopShell>
@@ -57,26 +61,6 @@ function JoinPage() {
               <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#9f9676]">
                 Checking membership…
               </div>
-            ) : auth.isAuthenticated ? (
-              <>
-                <ShieldCheck size={30} className="text-[#9dcf83]" />
-                <div className="font-mono mt-5 text-[9px] uppercase tracking-[0.24em] text-[#9dcf83]">
-                  Authenticated member
-                </div>
-                <h2 className="font-display mt-2 text-5xl uppercase tracking-[0.03em] text-[#f6efd9]">
-                  Welcome back.
-                </h2>
-                <p className="mt-4 text-sm leading-7 text-[#b8ad8d]">
-                  Continue to your member record to update contact information,
-                  shipping, and offering requests.
-                </p>
-                <Link
-                  to="/profile"
-                  className="mt-7 flex items-center justify-between bg-[#9dcf83] px-4 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-[#0b0d12] no-underline"
-                >
-                  Open member profile <ArrowRight size={15} />
-                </Link>
-              </>
             ) : (
               <>
                 <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-[#9dcf83]">

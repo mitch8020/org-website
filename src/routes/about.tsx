@@ -1,15 +1,27 @@
 import { useEffect, useState } from 'react'
-import { Link, createFileRoute, useLocation, useNavigate } from '@tanstack/react-router'
-import type { OutlineNode } from '#/lib/about-content'
-import { ARTICLES, CONTACT } from '#/lib/about-content'
+import {
+  Link,
+  createFileRoute,
+  useLocation,
+  useNavigate,
+} from '@tanstack/react-router'
+import type {
+  AboutArticle,
+  AboutOutlineNode,
+  AboutPageContent,
+} from '#/lib/content-types'
+import { loadPublishedPage } from '#/lib/content-api'
 import { SiteNav } from '#/components/SiteNav'
 import { SECTIONS } from '#/lib/sections'
 import { withHighlight } from '#/lib/search'
 
 export const Route = createFileRoute('/about')({
-  head: () => ({
+  loader: () => loadPublishedPage('about'),
+  head: ({ loaderData }) => ({
     meta: [
-      { title: 'About Us — ORG · The Octagon Religious-Research Group' },
+      {
+        title: `${loaderData?.content.title ?? 'About Us'} — ORG · The Octagon Religious-Research Group`,
+      },
       {
         name: 'description',
         content:
@@ -120,7 +132,7 @@ function OutlineList({
   depth,
   idBase,
 }: {
-  nodes: ReadonlyArray<OutlineNode>
+  nodes: ReadonlyArray<AboutOutlineNode>
   depth: number
   idBase: string
 }) {
@@ -140,12 +152,12 @@ function OutlineList({
             <span
               className={`flex-none whitespace-nowrap pt-[0.05em] text-right tabular-nums ${t.mk} min-w-[2em] text-[0.86em] tracking-wide`}
             >
-              {n.m}
+              {n.marker}
             </span>
             <div className="min-w-0 flex-1">
-              <p className={`m-0 ${t.tx}`}>{renderInline(n.t, k)}</p>
-              {n.c && n.c.length > 0 ? (
-                <OutlineList nodes={n.c} depth={depth + 1} idBase={k} />
+              <p className={`m-0 ${t.tx}`}>{renderInline(n.text, k)}</p>
+              {n.children.length > 0 ? (
+                <OutlineList nodes={n.children} depth={depth + 1} idBase={k} />
               ) : null}
             </div>
           </li>
@@ -156,8 +168,14 @@ function OutlineList({
 }
 
 /* ── one Article block ────────────────────────────────────────────────── */
-function ArticleBlock({ index }: { index: number }) {
-  const a = ARTICLES[index]
+function ArticleBlock({
+  article,
+  index,
+}: {
+  article: AboutArticle
+  index: number
+}) {
+  const a = article
   return (
     <section
       id={a.id}
@@ -199,7 +217,7 @@ function ArticleBlock({ index }: { index: number }) {
 }
 
 /* ── contact finale (Article IX) ──────────────────────────────────────── */
-function ContactBlock() {
+function ContactBlock({ contact }: { contact: AboutPageContent['contact'] }) {
   return (
     <section id="contact" data-article className="ab-rise scroll-mt-[160px]">
       <div className="flex items-baseline gap-4 sm:gap-6">
@@ -208,7 +226,7 @@ function ContactBlock() {
             className="m-0 font-thin tracking-[-0.01em] text-[#f3ead0]"
             style={{ fontSize: 'clamp(22px,3vw,34px)' }}
           >
-            {CONTACT.eyebrow}
+            {contact.eyebrow}
           </h2>
         </div>
       </div>
@@ -225,11 +243,11 @@ function ContactBlock() {
         className="mb-0 mt-6 font-light text-[#cdc2a4]"
         style={{ fontSize: '15px', lineHeight: 1.7 }}
       >
-        Reach a member directly through either channel below.
+        {contact.intro}
       </p>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {CONTACT.channels.map((ch) => {
+        {contact.channels.map((ch) => {
           const inner = (
             <>
               <div className="text-[10px] uppercase tracking-[0.34em] text-[#b8ad8d]">
@@ -244,7 +262,7 @@ function ContactBlock() {
             'group relative block overflow-hidden border border-[rgba(212,162,74,0.28)] bg-[rgba(212,162,74,0.04)] p-5 no-underline transition-colors duration-300 hover:border-[rgba(212,162,74,0.6)] hover:bg-[rgba(212,162,74,0.08)] [clip-path:polygon(14px_0,100%_0,100%_calc(100%-14px),calc(100%-14px)_100%,0_100%,0_14px)]'
           return ch.href ? (
             <a
-              key={ch.label}
+              key={ch.id}
               href={ch.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -256,7 +274,7 @@ function ContactBlock() {
               </span>
             </a>
           ) : (
-            <div key={ch.label} className={cls}>
+            <div key={ch.id} className={cls}>
               {inner}
             </div>
           )
@@ -268,6 +286,10 @@ function ContactBlock() {
 
 /* ── page ─────────────────────────────────────────────────────────────── */
 function AboutPage() {
+  return <AboutDocument content={Route.useLoaderData().content} />
+}
+
+export function AboutDocument({ content }: { content: AboutPageContent }) {
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -275,8 +297,16 @@ function AboutPage() {
   const searchTerm = searchParams.get('q') || undefined
 
   const toc = [
-    ...ARTICLES.map((a) => ({ id: a.id, roman: a.roman, label: a.eyebrow })),
-    { id: 'contact', roman: CONTACT.roman, label: CONTACT.eyebrow },
+    ...content.articles.map((article) => ({
+      id: article.id,
+      roman: article.roman,
+      label: article.eyebrow,
+    })),
+    {
+      id: 'contact',
+      roman: content.contact.roman,
+      label: content.contact.eyebrow,
+    },
   ]
 
   const [active, setActive] = useState(toc[0].id)
@@ -355,7 +385,7 @@ function AboutPage() {
           className="ab-rise m-0 font-thin uppercase leading-[0.95] tracking-[0.12em] text-[#f6efd9]"
           style={{ fontSize: 'clamp(44px,9vw,120px)', animationDelay: '200ms' }}
         >
-          About&nbsp;Us
+          {content.title}
         </h1>
 
         <div
@@ -366,13 +396,19 @@ function AboutPage() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d4a24a] opacity-60" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#d4a24a]" />
           </span>
-          A living document — revised as our knowledge and beliefs evolve.
+          {content.statusNote}
         </div>
 
         {/* Light search context (full line highlights live on Reference pages) */}
         {searchTerm && (
           <div className="ab-rise mt-4 text-[10px] uppercase tracking-[0.34em] text-[#d4a24a]">
-            SEARCHING “{searchTerm}” — <button onClick={() => navigate({ to: location.pathname, search: {} })} className="underline decoration-dotted hover:text-[#f0e6d0]">CLEAR</button>
+            SEARCHING “{searchTerm}” —{' '}
+            <button
+              onClick={() => navigate({ to: location.pathname, search: {} })}
+              className="underline decoration-dotted hover:text-[#f0e6d0]"
+            >
+              CLEAR
+            </button>
           </div>
         )}
       </section>
@@ -410,14 +446,12 @@ function AboutPage() {
         </aside>
 
         <main className="flex min-w-0 flex-col gap-[clamp(52px,8vh,88px)]">
-          {ARTICLES.map((a, i) => (
-            <ArticleBlock key={a.id} index={i} />
+          {content.articles.map((article, index) => (
+            <ArticleBlock key={article.id} article={article} index={index} />
           ))}
-          <ContactBlock />
+          <ContactBlock contact={content.contact} />
         </main>
       </div>
-
-      
     </div>
   )
 }

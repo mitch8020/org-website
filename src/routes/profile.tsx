@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { LogOut, Pencil, ShieldCheck, Trash2 } from 'lucide-react'
-import {
-  apiRequest,
-  humanStatus,
-  money,
-} from '#/lib/api'
+import { apiRequest, humanStatus, money } from '#/lib/api'
 import type { MemberProfile, Order } from '#/lib/api'
+import type { WebsiteCapabilities } from '#/lib/content-types'
 import { useOrgAuth } from '#/lib/auth'
 import { MemberGate } from '#/components/shop/MemberGate'
 import { ProfileEditor } from '#/components/shop/ProfileEditor'
 import { ShopShell } from '#/components/shop/ShopShell'
+import { ProfileAdminLinks } from '#/components/shop/ProfileAdminLinks'
 
 export const Route = createFileRoute('/profile')({
   head: () => ({
@@ -41,6 +39,9 @@ function Profile() {
   const auth = useOrgAuth()
   const [profile, setProfile] = useState<MemberProfile | null>(null)
   const [orders, setOrders] = useState<Order[]>([])
+  const [capabilities, setCapabilities] = useState<WebsiteCapabilities | null>(
+    null,
+  )
   const [editing, setEditing] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -51,12 +52,16 @@ function Profile() {
     try {
       const token = await auth.getToken()
       if (!token) throw new Error('Your sign-in session has expired.')
-      const [nextProfile, nextOrders] = await Promise.all([
+      const [nextProfile, nextOrders, nextCapabilities] = await Promise.all([
         apiRequest<MemberProfile>('/me', { token }),
         apiRequest<Order[]>('/orders', { token }),
+        apiRequest<WebsiteCapabilities>('/me/capabilities', { token }).catch(
+          () => null,
+        ),
       ])
       setProfile(nextProfile)
       setOrders(nextOrders)
+      setCapabilities(nextCapabilities)
       setEditing(
         !nextProfile.preferredName ||
           !nextProfile.email ||
@@ -192,12 +197,7 @@ function Profile() {
             )}
           </section>
 
-          <Link
-            to="/admin/orders"
-            className="block border border-[#ece2c4]/18 px-4 py-3 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-[#9f9676] no-underline hover:border-[#9dcf83] hover:text-[#9dcf83]"
-          >
-            Admin order queue
-          </Link>
+          <ProfileAdminLinks capabilities={capabilities} />
         </aside>
 
         <div>

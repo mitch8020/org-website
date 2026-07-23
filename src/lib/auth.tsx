@@ -1,11 +1,6 @@
-import {
-  Auth0Provider,
-  useAuth0,
-} from '@auth0/auth0-react'
-import type {
-  AppState,
-  RedirectLoginOptions,
-} from '@auth0/auth0-react'
+import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
+import type { AppState, RedirectLoginOptions } from '@auth0/auth0-react'
+import { useRouter } from '@tanstack/react-router'
 import {
   createContext,
   useCallback,
@@ -63,7 +58,7 @@ function Auth0Bridge({ children }: { children: ReactNode }) {
 
   const logout = useCallback(async () => {
     auth.logout({
-      logoutParams: { returnTo: window.location.origin },
+      logoutParams: { returnTo: `${window.location.origin}/logout` },
     })
   }, [auth])
 
@@ -91,6 +86,7 @@ function Auth0Bridge({ children }: { children: ReactNode }) {
 }
 
 export function OrgAuthProvider({ children }: { children: ReactNode }) {
+  const router = useRouter()
   const domain = import.meta.env.VITE_AUTH0_DOMAIN
   const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID
   const audience = import.meta.env.VITE_AUTH0_AUDIENCE
@@ -98,6 +94,12 @@ export function OrgAuthProvider({ children }: { children: ReactNode }) {
     () => () => {},
     () => true,
     () => false,
+  )
+  const handleRedirect = useCallback(
+    (appState?: AppState) => {
+      router.history.replace(appState?.returnTo || '/profile')
+    },
+    [router.history],
   )
 
   if (!hydrated) {
@@ -121,13 +123,12 @@ export function OrgAuthProvider({ children }: { children: ReactNode }) {
       domain={domain}
       clientId={clientId}
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: `${window.location.origin}/callback`,
         audience,
-        scope: 'openid profile email',
+        scope:
+          'openid profile email read:orders update:orders read:content update:content publish:content',
       }}
-      onRedirectCallback={(appState) => {
-        window.location.replace(appState?.returnTo || '/profile')
-      }}
+      onRedirectCallback={handleRedirect}
       useRefreshTokens
     >
       <Auth0Bridge>{children}</Auth0Bridge>

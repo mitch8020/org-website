@@ -1,11 +1,13 @@
 import type { ReactNode } from 'react'
-import type { ReferencePageId } from '#/lib/reference-pages'
-import { REFERENCE_PAGES } from '#/lib/reference-pages'
-import { SECTIONS } from '#/lib/sections'
-import type { Article, OutlineNode } from '#/lib/about-content'
-import { ARTICLES } from '#/lib/about-content'
+import { DEFAULT_WEBSITE_PAGES } from '#/lib/content-defaults'
+import type {
+  AboutOutlineNode,
+  AboutPageContent,
+  WebsitePageContent,
+  WebsitePageId,
+} from '#/lib/content-types'
 
-export type SearchPageId = ReferencePageId | 'about'
+export type SearchPageId = WebsitePageId
 
 export interface SearchResult {
   pageId: SearchPageId
@@ -57,7 +59,7 @@ export function withHighlight(text: string, term?: string): ReactNode[] {
       </mark>
     ) : (
       part
-    )
+    ),
   )
 }
 
@@ -75,7 +77,12 @@ function makeSnippet(text: string, term: string, max = 118): string {
   return snip.length > max ? snip.slice(0, max - 1) + '…' : snip
 }
 
-function scoreMatch(text: string, q: string, base: number, positionBoost = 0): number {
+function scoreMatch(
+  text: string,
+  q: string,
+  base: number,
+  positionBoost = 0,
+): number {
   if (!text.toLowerCase().includes(q)) return 0
   let s = base
   // slight boost for earlier occurrence or title-like
@@ -87,22 +94,27 @@ function scoreMatch(text: string, q: string, base: number, positionBoost = 0): n
   return s
 }
 
-function flattenAboutForSearch(): Array<{ text: string; articleId?: string }> {
+function flattenAboutForSearch(
+  page: AboutPageContent,
+): Array<{ text: string; articleId?: string }> {
   const out: Array<{ text: string; articleId?: string }> = []
-  ARTICLES.forEach((a: Article) => {
-    out.push({ text: a.lead, articleId: a.id })
-    const walk = (nodes: ReadonlyArray<OutlineNode>) => {
-      nodes.forEach((n) => {
-        out.push({ text: n.t, articleId: a.id })
-        if (n.c && n.c.length) walk(n.c)
+  page.articles.forEach((article) => {
+    out.push({ text: article.lead, articleId: article.id })
+    const walk = (nodes: ReadonlyArray<AboutOutlineNode>) => {
+      nodes.forEach((node) => {
+        out.push({ text: node.text, articleId: article.id })
+        if (node.children.length) walk(node.children)
       })
     }
-    if (a.body.length) walk(a.body)
+    if (article.body.length) walk(article.body)
   })
   return out
 }
 
-export function search(query: string): SearchResult[] {
+export function search(
+  query: string,
+  pages: WebsitePageContent[] = Object.values(DEFAULT_WEBSITE_PAGES),
+): SearchResult[] {
   const q = (query || '').trim()
   if (!q || q.length < 1) return []
 
@@ -110,72 +122,84 @@ export function search(query: string): SearchResult[] {
   const results: SearchResult[] = []
 
   // Reference pages (primary)
-  REFERENCE_PAGES.forEach((page) => {
-    let pageScore = 0
-    let bestLineIdx: number | undefined
-    let bestSnippet = ''
+  pages
+    .filter((page) => page.kind === 'reference')
+    .forEach((page) => {
+      let pageScore = 0
+      let bestLineIdx: number | undefined
+      let bestSnippet = ''
 
-    // Title
-    const tScore = scoreMatch(page.title, ql, 110)
-    if (tScore) {
-      pageScore += tScore
-      bestSnippet = page.title
-    }
+      // Title
+      const tScore = scoreMatch(page.title, ql, 110)
+      if (tScore) {
+        pageScore += tScore
+        bestSnippet = page.title
+      }
 
-    // Subtitle
-    const subScore = scoreMatch(page.subtitle, ql, 45)
-    pageScore += subScore
-    if (subScore && !bestSnippet) bestSnippet = page.subtitle
+      // Subtitle
+      const subScore = scoreMatch(page.subtitle, ql, 45)
+      pageScore += subScore
+      if (subScore && !bestSnippet) bestSnippet = page.subtitle
 
-    // Lines
-    page.lines.forEach((line, idx) => {
-      const lineScore = scoreMatch(line, ql, 28, Math.max(0, 12 - Math.floor(idx / 3)))
-      if (lineScore > 0) {
-        pageScore += lineScore
-        if (bestLineIdx === undefined) {
-          bestLineIdx = idx
-          bestSnippet = makeSnippet(line, q)
+      // Lines
+      page.blocks.forEach((block, idx) => {
+        const lineScore = scoreMatch(
+          block.text,
+          ql,
+          28,
+          Math.max(0, 12 - Math.floor(idx / 3)),
+        )
+        if (lineScore > 0) {
+          pageScore += lineScore
+          if (bestLineIdx === undefined) {
+            bestLineIdx = idx
+            bestSnippet = makeSnippet(block.text, q)
+          }
         }
+      })
+
+      if (pageScore > 0) {
+        const title = PAGE_TITLES[page.id]
+        results.push({
+          pageId: page.id,
+          title,
+          href: PAGE_HREFS[page.id],
+          snippet: bestSnippet || page.subtitle,
+          score: pageScore,
+          lineIndex: bestLineIdx,
+        })
       }
     })
 
-    if (pageScore > 0) {
-      const title = PAGE_TITLES[page.id]
+  // About (synthesized)
+  const about = pages.find(
+    (page): page is AboutPageContent => page.kind === 'about',
+  )
+  if (about) {
+    let aboutScore = 0
+    let aboutSnippet = ''
+    const aboutBlocks = flattenAboutForSearch(about)
+    const titleScore = scoreMatch(about.title, ql, 95)
+    if (titleScore) {
+      aboutScore += titleScore
+      aboutSnippet = `${about.title} — founding document`
+    }
+    aboutBlocks.forEach((block) => {
+      const score = scoreMatch(block.text, ql, 22)
+      if (score > 0) {
+        aboutScore += score
+        if (!aboutSnippet) aboutSnippet = makeSnippet(block.text, q)
+      }
+    })
+    if (aboutScore > 0) {
       results.push({
-        pageId: page.id,
-        title,
-        href: PAGE_HREFS[page.id],
-        snippet: bestSnippet || page.subtitle,
-        score: pageScore,
-        lineIndex: bestLineIdx,
+        pageId: 'about',
+        title: about.title,
+        href: '/about',
+        snippet: aboutSnippet || 'Founding document, mission, and contact.',
+        score: aboutScore,
       })
     }
-  })
-
-  // About (synthesized)
-  let aboutScore = 0
-  let aboutSnippet = ''
-  const aboutBlocks = flattenAboutForSearch()
-  const titleScore = scoreMatch('About Us', ql, 95)
-  if (titleScore) {
-    aboutScore += titleScore
-    aboutSnippet = 'About Us — founding document'
-  }
-  aboutBlocks.forEach((b) => {
-    const s = scoreMatch(b.text, ql, 22)
-    if (s > 0) {
-      aboutScore += s
-      if (!aboutSnippet) aboutSnippet = makeSnippet(b.text, q)
-    }
-  })
-  if (aboutScore > 0) {
-    results.push({
-      pageId: 'about',
-      title: 'About Us',
-      href: '/about',
-      snippet: aboutSnippet || 'Founding document, mission, and contact.',
-      score: aboutScore,
-    })
   }
 
   // Sort: higher score first, stable

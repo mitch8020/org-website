@@ -12,12 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as OfferingsRouteImport } from './routes/offerings'
+import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as InfrastructureRouteImport } from './routes/infrastructure'
 import { Route as GiftsContributionsRouteImport } from './routes/gifts-contributions'
 import { Route as FutureIdeasRouteImport } from './routes/future-ideas'
 import { Route as CommunityRouteImport } from './routes/community'
+import { Route as CallbackRouteImport } from './routes/callback'
 import { Route as BeliefsRouteImport } from './routes/beliefs'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -28,6 +30,7 @@ import { Route as Archive4RouteImport } from './routes/archive/4'
 import { Route as Archive3RouteImport } from './routes/archive/3'
 import { Route as Archive2RouteImport } from './routes/archive/2'
 import { Route as Archive1RouteImport } from './routes/archive/1'
+import { Route as AdminWebsiteRouteImport } from './routes/admin.website'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
 
 const ResearchRoute = ResearchRouteImport.update({
@@ -43,6 +46,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const OfferingsRoute = OfferingsRouteImport.update({
   id: '/offerings',
   path: '/offerings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogoutRoute = LogoutRouteImport.update({
+  id: '/logout',
+  path: '/logout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalRoute = LegalRouteImport.update({
@@ -73,6 +81,11 @@ const FutureIdeasRoute = FutureIdeasRouteImport.update({
 const CommunityRoute = CommunityRouteImport.update({
   id: '/community',
   path: '/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CallbackRoute = CallbackRouteImport.update({
+  id: '/callback',
+  path: '/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BeliefsRoute = BeliefsRouteImport.update({
@@ -125,6 +138,11 @@ const Archive1Route = Archive1RouteImport.update({
   path: '/archive/1',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminWebsiteRoute = AdminWebsiteRouteImport.update({
+  id: '/admin/website',
+  path: '/admin/website',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminOrdersRoute = AdminOrdersRouteImport.update({
   id: '/admin/orders',
   path: '/admin/orders',
@@ -135,16 +153,19 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/beliefs': typeof BeliefsRoute
+  '/callback': typeof CallbackRoute
   '/community': typeof CommunityRoute
   '/future-ideas': typeof FutureIdeasRoute
   '/gifts-contributions': typeof GiftsContributionsRoute
   '/infrastructure': typeof InfrastructureRoute
   '/join': typeof JoinRoute
   '/legal': typeof LegalRoute
+  '/logout': typeof LogoutRoute
   '/offerings': typeof OfferingsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/research': typeof ResearchRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/admin/website': typeof AdminWebsiteRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
@@ -157,16 +178,19 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/beliefs': typeof BeliefsRoute
+  '/callback': typeof CallbackRoute
   '/community': typeof CommunityRoute
   '/future-ideas': typeof FutureIdeasRoute
   '/gifts-contributions': typeof GiftsContributionsRoute
   '/infrastructure': typeof InfrastructureRoute
   '/join': typeof JoinRoute
   '/legal': typeof LegalRoute
+  '/logout': typeof LogoutRoute
   '/offerings': typeof OfferingsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/research': typeof ResearchRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/admin/website': typeof AdminWebsiteRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
@@ -180,16 +204,19 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/beliefs': typeof BeliefsRoute
+  '/callback': typeof CallbackRoute
   '/community': typeof CommunityRoute
   '/future-ideas': typeof FutureIdeasRoute
   '/gifts-contributions': typeof GiftsContributionsRoute
   '/infrastructure': typeof InfrastructureRoute
   '/join': typeof JoinRoute
   '/legal': typeof LegalRoute
+  '/logout': typeof LogoutRoute
   '/offerings': typeof OfferingsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/research': typeof ResearchRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/admin/website': typeof AdminWebsiteRoute
   '/archive/1': typeof Archive1Route
   '/archive/2': typeof Archive2Route
   '/archive/3': typeof Archive3Route
@@ -204,16 +231,19 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/beliefs'
+    | '/callback'
     | '/community'
     | '/future-ideas'
     | '/gifts-contributions'
     | '/infrastructure'
     | '/join'
     | '/legal'
+    | '/logout'
     | '/offerings'
     | '/profile'
     | '/research'
     | '/admin/orders'
+    | '/admin/website'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
@@ -226,16 +256,19 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/beliefs'
+    | '/callback'
     | '/community'
     | '/future-ideas'
     | '/gifts-contributions'
     | '/infrastructure'
     | '/join'
     | '/legal'
+    | '/logout'
     | '/offerings'
     | '/profile'
     | '/research'
     | '/admin/orders'
+    | '/admin/website'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
@@ -248,16 +281,19 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/beliefs'
+    | '/callback'
     | '/community'
     | '/future-ideas'
     | '/gifts-contributions'
     | '/infrastructure'
     | '/join'
     | '/legal'
+    | '/logout'
     | '/offerings'
     | '/profile'
     | '/research'
     | '/admin/orders'
+    | '/admin/website'
     | '/archive/1'
     | '/archive/2'
     | '/archive/3'
@@ -271,16 +307,19 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BeliefsRoute: typeof BeliefsRoute
+  CallbackRoute: typeof CallbackRoute
   CommunityRoute: typeof CommunityRoute
   FutureIdeasRoute: typeof FutureIdeasRoute
   GiftsContributionsRoute: typeof GiftsContributionsRoute
   InfrastructureRoute: typeof InfrastructureRoute
   JoinRoute: typeof JoinRoute
   LegalRoute: typeof LegalRoute
+  LogoutRoute: typeof LogoutRoute
   OfferingsRoute: typeof OfferingsRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   ResearchRoute: typeof ResearchRoute
   AdminOrdersRoute: typeof AdminOrdersRoute
+  AdminWebsiteRoute: typeof AdminWebsiteRoute
   Archive1Route: typeof Archive1Route
   Archive2Route: typeof Archive2Route
   Archive3Route: typeof Archive3Route
@@ -310,6 +349,13 @@ declare module '@tanstack/react-router' {
       path: '/offerings'
       fullPath: '/offerings'
       preLoaderRoute: typeof OfferingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logout': {
+      id: '/logout'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof LogoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal': {
@@ -352,6 +398,13 @@ declare module '@tanstack/react-router' {
       path: '/community'
       fullPath: '/community'
       preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/callback': {
+      id: '/callback'
+      path: '/callback'
+      fullPath: '/callback'
+      preLoaderRoute: typeof CallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/beliefs': {
@@ -424,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Archive1RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/website': {
+      id: '/admin/website'
+      path: '/admin/website'
+      fullPath: '/admin/website'
+      preLoaderRoute: typeof AdminWebsiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/orders': {
       id: '/admin/orders'
       path: '/admin/orders'
@@ -450,16 +510,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BeliefsRoute: BeliefsRoute,
+  CallbackRoute: CallbackRoute,
   CommunityRoute: CommunityRoute,
   FutureIdeasRoute: FutureIdeasRoute,
   GiftsContributionsRoute: GiftsContributionsRoute,
   InfrastructureRoute: InfrastructureRoute,
   JoinRoute: JoinRoute,
   LegalRoute: LegalRoute,
+  LogoutRoute: LogoutRoute,
   OfferingsRoute: OfferingsRouteWithChildren,
   ProfileRoute: ProfileRoute,
   ResearchRoute: ResearchRoute,
   AdminOrdersRoute: AdminOrdersRoute,
+  AdminWebsiteRoute: AdminWebsiteRoute,
   Archive1Route: Archive1Route,
   Archive2Route: Archive2Route,
   Archive3Route: Archive3Route,
