@@ -63,6 +63,7 @@ export interface MemberProfile {
   auth0Sub: string
   authEmail?: string
   authEmailVerified: boolean
+  isAdmin: boolean
   preferredName: string
   email: string
   membershipType: 'public' | 'private' | 'anonymous'
