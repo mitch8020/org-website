@@ -228,7 +228,7 @@ function SacredGeometry() {
 
                     <span
                       aria-hidden
-                      className="absolute bottom-[5px] left-0 right-0 z-[20] text-center leading-none tracking-[0.04em] uppercase pb-1.5 pointer-events-none text-[clamp(11px,1.8vw,28px)] font-bold text-[#ece2c4] group-hover:text-[#f0e6d0]"
+                      className="absolute bottom-0 left-0 right-0 z-[20] text-center leading-none tracking-[0.04em] uppercase pb-[11px] pointer-events-none text-[clamp(7px,calc(1.8vw-4px),24px)] font-bold text-[#ece2c4] group-hover:text-[#f0e6d0]"
                       style={{
                         background: 'linear-gradient(to top, rgba(11,13,18,0.65) 0%, rgba(11,13,18,0.3) 55%, transparent 100%)'
                       }}
@@ -258,7 +258,7 @@ function SacredGeometry() {
                 />
                 <span
                   aria-hidden
-                  className="absolute bottom-[5px] left-0 right-0 z-[20] text-center leading-none tracking-[0.04em] uppercase pb-1.5 pointer-events-none text-[clamp(11px,1.8vw,28px)] font-bold text-[#ece2c4] group-hover:text-[#f0e6d0]"
+                  className="absolute bottom-0 left-0 right-0 z-[20] text-center leading-none tracking-[0.04em] uppercase pb-[11px] pointer-events-none text-[clamp(7px,calc(1.8vw-4px),24px)] font-bold text-[#ece2c4] group-hover:text-[#f0e6d0]"
                   style={{
                     background: 'linear-gradient(to top, rgba(11,13,18,0.65) 0%, rgba(11,13,18,0.3) 55%, transparent 100%)'
                   }}

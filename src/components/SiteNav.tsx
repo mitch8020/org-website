@@ -86,8 +86,8 @@ function NavSquare({
           <span
             className={`pointer-events-none absolute right-0 bottom-0 left-0 z-10 pb-1.5 text-center leading-none tracking-[0.04em] uppercase ${
               compact
-                ? 'text-[12px] font-semibold'
-                : 'text-[clamp(9px,1vw,13px)] font-bold'
+                ? 'text-[10px] font-semibold'
+                : 'text-[clamp(7px,calc(1vw-2px),11px)] font-bold'
             } ${active ? 'text-[#d4a24a]' : 'text-[#ece2c4] group-hover:text-[#f0e6d0]'}`}
             style={
               !active
