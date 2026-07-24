@@ -61,6 +61,8 @@ export interface ShippingAddress {
 export interface MemberProfile {
   _id?: string
   auth0Sub: string
+  authEmail?: string
+  authEmailVerified: boolean
   preferredName: string
   email: string
   membershipType: 'public' | 'private' | 'anonymous'
