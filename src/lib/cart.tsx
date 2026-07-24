@@ -31,7 +31,7 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | null>(null)
 
-function getGuestToken() {
+export function getGuestToken() {
   return typeof window === 'undefined'
     ? undefined
     : localStorage.getItem(GUEST_TOKEN_KEY) || undefined

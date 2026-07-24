@@ -64,11 +64,7 @@ export function withHighlight(text: string, term?: string): ReactNode[] {
 }
 
 function makeSnippet(text: string, term: string, max = 118): string {
-  const lower = text.toLowerCase()
-  const idx = lower.indexOf(term.toLowerCase())
-  if (idx === -1) {
-    return text.length > max ? text.slice(0, max - 1) + '…' : text
-  }
+  const idx = text.toLowerCase().indexOf(term.toLowerCase())
   const start = Math.max(0, idx - 42)
   const end = Math.min(text.length, idx + term.length + 52)
   let snip = text.slice(start, end)
@@ -116,7 +112,7 @@ export function search(
   pages: WebsitePageContent[] = Object.values(DEFAULT_WEBSITE_PAGES),
 ): SearchResult[] {
   const q = (query || '').trim()
-  if (!q || q.length < 1) return []
+  if (!q) return []
 
   const ql = q.toLowerCase()
   const results: SearchResult[] = []
@@ -164,7 +160,7 @@ export function search(
           pageId: page.id,
           title,
           href: PAGE_HREFS[page.id],
-          snippet: bestSnippet || page.subtitle,
+          snippet: bestSnippet,
           score: pageScore,
           lineIndex: bestLineIdx,
         })
@@ -196,7 +192,7 @@ export function search(
         pageId: 'about',
         title: about.title,
         href: '/about',
-        snippet: aboutSnippet || 'Founding document, mission, and contact.',
+        snippet: aboutSnippet,
         score: aboutScore,
       })
     }

@@ -19,11 +19,22 @@ npm run build
 
 ## Testing
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+Vitest covers the API, auth, cart, publishing, search, and editor/workbench
+behavior layer. Playwright exercises the built production preview on port
+`50074`, including public documents, search, responsive navigation, and the
+guest offerings flow.
 
 ```bash
 npm run test
+npm run test:coverage
+npm run test:e2e
+npm run test:all
 ```
+
+The coverage command enforces 100% statements, branches, functions, and lines
+for the behavior modules listed in `vite.config.ts`. Generated routes, static
+content/type declarations, and declarative page rendering are outside the unit
+coverage denominator and are exercised by the production-preview E2E suite.
 
 ## Styling
 

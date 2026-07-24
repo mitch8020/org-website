@@ -54,6 +54,15 @@ describe('website workbench state', () => {
     expect(page.draft?.content.title).toBe('Community')
   })
 
+  it('uses published content when no draft exists and treats no page as clean', () => {
+    const page = pageFixture()
+    page.draft = null
+    const state = createWorkingPageState(page)
+
+    expect(state.working).toEqual(page.published.content)
+    expect(hasUnsavedWebsiteChanges(null, state.savedSnapshot)).toBe(false)
+  })
+
   it('uses useful error messages with a safe fallback', () => {
     expect(getWorkbenchError(new Error('Session expired'), 'Fallback')).toBe(
       'Session expired',
